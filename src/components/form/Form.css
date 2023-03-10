@@ -11,6 +11,10 @@
     border-radius: 15px;
     box-shadow: 10px 10px rgba(0, 0, 0, 0.2);
 }
+.error{
+    color: red;
+    
+}
 form {
     width: 35rem;
   }
