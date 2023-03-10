@@ -1,0 +1,17 @@
+input {
+    padding: .5rem .5rem .5rem .5rem;
+    width: 90%;
+    border-radius: 8px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(236, 236, 236);
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  label {
+    font-family:Arial, Helvetica, sans-serif;
+ 
+    padding-bottom: 5px;
+    font-size:1rem;
+    display: flex;
+    margin-left: 20px;
+}

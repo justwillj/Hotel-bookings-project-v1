@@ -1,0 +1,71 @@
+
+/* Link that helped me with the nav styling 
+ https://dev.to/supanthapaul/create-a-simple-navbar-with-7-lines-of-css-4h7f */
+ nav {
+    display: flex;
+    justify-content: space-between;
+    padding: .2rem 3rem; 
+    background: linear-gradient(45deg, #838383, #b4b4b4);
+  }
+  h1{
+    font-size: 3.5rem;
+  }
+
+nav ul {
+    display: flex;
+    list-style: none; 
+}
+
+nav li {
+    font-size: 3rem;
+    color: white;
+    padding-left: 5rem;
+  }
+
+  .header{
+    font-size: x-large;
+    text-align: center;
+    display: flex;
+  }
+
+  img{
+    margin-right: .5rem;
+    width: 33%;
+  }
+
+  li {
+    background-image: linear-gradient(
+      to right,
+      #54b3d6,
+      #54b3d6 50%,
+      #000 50%
+    );
+    background-size: 200% 100%;
+    background-position: -100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+  }
+
+
+  li:hover {
+    background-position: 0;
+   }
+
+   li:before {
+    content: '';
+    background: #54b3d6;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+  }
+  .active{
+    background-image: linear-gradient(
+      #00bbff,
+      #00bbff 100%,
+      #000 50%
+    );
+  }
