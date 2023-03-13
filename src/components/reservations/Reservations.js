@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom/dist";
+import { Link, useNavigate } from "react-router-dom/dist";
+import Button from "../button/Button";
 import Card from "../card/Card";
 import "./Reservations.css";
 const Reservations = () => {
@@ -42,10 +43,6 @@ const Reservations = () => {
   useEffect(() => {
     getAllData();
   }, []);
-
-  const createReservation = () => {
-    redirect("/reservations/create");
-  };
 
   return (
     <div>
@@ -94,7 +91,9 @@ const Reservations = () => {
         })}
       </div>
 
-      <button onClick={createReservation}>Create</button>
+      <Link to="/reservations/create">
+        <Button value="Create" />
+      </Link>
     </div>
   );
 };
