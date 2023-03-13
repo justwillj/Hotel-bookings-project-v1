@@ -1,9 +1,12 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { isValidDate, isValidEmail, isValidNumber } from "../../validation";
 import Button from "../button/Button";
 import Input from "../input/Input";
 import "./CreateReservations.css";
 const CreateReservation = () => {
+  const navigate = useNavigate();
   const [guestEmail, setGuestEmail] = useState({ value: "", error: false });
 
   const [checkInDate, setCheckInDate] = useState({ value: "", error: false });
@@ -85,24 +88,40 @@ const CreateReservation = () => {
     if (!isValidEmail(guestEmail.value)) {
       setGuestEmail({ ...guestEmail, error: true });
       formIsValid = false;
+      e.preventDefault();
     }
 
     if (!isValidDate(checkInDate.value)) {
       setCheckInDate({ ...checkInDate, error: true });
       formIsValid = false;
+      e.preventDefault();
     }
 
     if (isValidNumber(numberOfNights.value)) {
       setNumberOfNights({ ...numberOfNights, error: true });
       formIsValid = false;
+      e.preventDefault();
     }
 
     if (roomType.value == "") {
       setRoomType({ ...roomType, error: true });
       formIsValid = false;
+      e.preventDefault();
     }
 
-    e.preventDefault();
+    if (formIsValid === true) {
+      addData();
+      navigate("/reservations");
+    }
+  };
+
+  const addData = () => {
+    axios.post(`https://640d0c1b1a18a5db83702985.mockapi.io/reservations`, {
+      guestEmail: guestEmail.value,
+      roomTypeId: roomType.value,
+      checkInDate: checkInDate.value,
+      numberOfNights: numberOfNights.value,
+    });
   };
 
   return (
@@ -115,21 +134,27 @@ const CreateReservation = () => {
           value={guestEmail.value}
           onChange={InputOnChange}
         />
-        {guestEmail.error ? <p>Must be a valid email</p> : null}
+        {guestEmail.error ? (
+          <p className="error">Must be a valid email</p>
+        ) : null}
         <Input
           label="Check-in date:"
           type="text"
           value={checkInDate.value}
           onChange={InputOnChange}
         />
-        {checkInDate.error ? <p>Date must be mm-dd-yyyy</p> : null}
+        {checkInDate.error ? (
+          <p className="error">Date must be mm-dd-yyyy</p>
+        ) : null}
         <Input
           label="Number of nights:"
           type="number"
           value={numberOfNights.value}
           onChange={InputOnChange}
         />
-        {numberOfNights.error ? <p>Must be number greater than zero</p> : null}
+        {numberOfNights.error ? (
+          <p className="error">Must be number greater than zero</p>
+        ) : null}
         <label htmlFor="Room Type:">Room Type:</label>
         <select value={roomType.value} onChange={selectOnChange}>
           <option value="" disabled selected>
@@ -143,7 +168,9 @@ const CreateReservation = () => {
             ) : null;
           })}
         </select>
-        {roomType.error ? <p>Must select a room type</p> : null}
+        {roomType.error ? (
+          <p className="error">Must select a room type</p>
+        ) : null}
         <Button value="Create" className="create-btn" />
       </form>
     </div>

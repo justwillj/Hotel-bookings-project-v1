@@ -1,6 +1,23 @@
 .create-btn{
-
     width: 90%;
     margin-left: 1.8rem;
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
+
+select{
+    position: relative;
+    display: block;
+    width: 93%;
+    margin: 0 auto;
+    font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+    font-size: 18px;
+    color: #60666d;
+}
+
+p {
+    font-family:Arial, Helvetica, sans-serif;
+    margin-top: -10px;
+    font-size: 24px;
+    color: red;
+  }
