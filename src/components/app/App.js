@@ -5,6 +5,7 @@ import "./App.css";
 import { BrowserRouter } from "react-router-dom/dist";
 import Reservations from "../reservations/Reservations";
 import CreateReservation from "../createReservation/CreateReservation";
+import UpdateReservation from "../updateReservation/UpdateReservation";
 
 function App() {
   return (
@@ -18,6 +19,11 @@ function App() {
             exact
             path="/reservations/create"
             element={<CreateReservation />}
+          ></Route>
+          <Route
+            exact
+            path="/reservations/edit/:id"
+            element={<UpdateReservation />}
           ></Route>
         </Routes>
       </BrowserRouter>

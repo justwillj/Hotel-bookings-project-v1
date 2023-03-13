@@ -85,20 +85,8 @@ const Reservations = () => {
               checkInDate={reservation.checkInDate}
               numberOfNights={reservation.numberOfNights}
               onClick={() => deleteReservation(reservation.id)}
+              endpoint={`edit/${reservation.id}`}
             />
-
-            // <h3>{reservation.guestEmail}</h3>
-            // <h3>{reservation.checkInDate}</h3>
-            // {roomTypesData.map((test) => {
-            //   return (
-            //     <>
-            //       {reservation.roomTypeId == test.id ? (
-            //         <h3>{test.name}</h3>
-            //       ) : null}
-            //     </>
-            //   );
-            // })}
-            // <h3>{reservation.numberOfNights}</h3>
           );
         })}
       </div>

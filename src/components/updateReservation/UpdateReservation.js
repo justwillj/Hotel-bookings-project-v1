@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { isValidDate, isValidEmail, isValidNumber } from "../../validation";
 import Button from "../button/Button";
 import Input from "../input/Input";
-import "./CreateReservations.css";
-const CreateReservation = () => {
+import "./UpdateReservation.css";
+const UpdateReservation = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [guestEmail, setGuestEmail] = useState({ value: "", error: false });
 
   const [checkInDate, setCheckInDate] = useState({ value: "", error: false });
@@ -53,6 +54,7 @@ const CreateReservation = () => {
    * Loads the getAllData function when the page is opened
    */
   useEffect(() => {
+    loadReservation();
     getAllData();
   }, []);
 
@@ -82,7 +84,7 @@ const CreateReservation = () => {
     }
   };
 
-  const addNewReservation = (e) => {
+  const updateOldReservation = (e) => {
     let formIsValid = true;
 
     if (!isValidEmail(guestEmail.value)) {
@@ -110,26 +112,64 @@ const CreateReservation = () => {
     }
 
     if (formIsValid === true) {
-      addData();
+      updateData();
       navigate("/reservations");
     }
   };
 
-  const addData = () => {
+  const updateData = () => {
     //Link that helped me with this
-    //https://blog.logrocket.com/how-to-use-axios-post-requests/
-    axios.post(`https://640d0c1b1a18a5db83702985.mockapi.io/reservations`, {
-      guestEmail: guestEmail.value,
-      roomTypeId: roomType.value,
-      checkInDate: checkInDate.value,
-      numberOfNights: numberOfNights.value,
-    });
+    //https://www.youtube.com/watch?v=GBbGEuZdyRg
+    axios.put(
+      `https://640d0c1b1a18a5db83702985.mockapi.io/reservations/${id}`,
+      {
+        guestEmail: guestEmail.value,
+        roomTypeId: roomType.value,
+        checkInDate: checkInDate.value,
+        numberOfNights: numberOfNights.value,
+      }
+    );
+  };
+
+  const loadReservation = () => {
+    axios
+      .get(`https://640d0c1b1a18a5db83702985.mockapi.io/reservations/${id}`)
+      .then((reservationRes) => {
+        if (!reservationRes.status == 200) {
+          throw Error;
+        }
+        return (
+          setGuestEmail({
+            ...guestEmail,
+            value: reservationRes.data.guestEmail,
+            error: false,
+          }),
+          setCheckInDate({
+            ...checkInDate,
+            value: reservationRes.data.checkInDate,
+            error: false,
+          }),
+          setNumberOfNights({
+            ...numberOfNights,
+            value: reservationRes.data.numberOfNights,
+            error: false,
+          }),
+          setRoomType({
+            ...roomType,
+            value: reservationRes.data.roomTypeId,
+            error: false,
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <div className="main-create">
-      <h1>Create Reservation Page</h1>
-      <form className="main" onSubmit={addNewReservation} noValidate>
+      <h1>Update Reservation Page</h1>
+      <form className="main" onSubmit={updateOldReservation} noValidate>
         <Input
           label="Guest Email:"
           type="email"
@@ -159,9 +199,6 @@ const CreateReservation = () => {
         ) : null}
         <label htmlFor="Room Type:">Room Type:</label>
         <select value={roomType.value} onChange={selectOnChange}>
-          <option value="" disabled>
-            Select your room type
-          </option>
           {roomTypesData.map((test) => {
             return test.active == true ? (
               <option key={test.id} value={test.id}>
@@ -174,9 +211,9 @@ const CreateReservation = () => {
         {roomType.error ? (
           <p className="error">Must select a room type</p>
         ) : null}
-        <Button value="Create" className="create-btn" />
+        <Button type="submit" value="Create" className="create-btn" />
       </form>
     </div>
   );
 };
-export default CreateReservation;
+export default UpdateReservation;
