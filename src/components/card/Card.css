@@ -1,0 +1,29 @@
+.card{
+    background: linear-gradient(69.9deg, rgb(91, 93, 112) 3.2%, rgb(137, 143, 180) 97.6%);
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    width: 500px;
+    margin: auto;
+    text-align: center;
+    margin-top: -1rem;
+    
+ }
+
+ .card-btn{
+    width: 45%;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+ }
+ 
+ h1{
+     font-size: 1.5rem;
+     color: white;
+     font-family:Arial, Helvetica, sans-serif;
+ }
+ 
+ h3{
+     color: rgb(0, 0, 0);
+ }
+
+ 
+ 

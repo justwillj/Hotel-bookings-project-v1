@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom/dist";
+import Button from "../button/Button";
 import Input from "../input/Input";
 import "./Form.css";
 const Form = () => {
@@ -21,7 +22,7 @@ const Form = () => {
         {error ? <p className="error">Invalid email or password</p> : null}
         <Input label="Email:" type="email" />
         <Input label="Password:" type="email" />
-        <button onClick={formSubmit}>Login</button>
+        <Button onClick={formSubmit} value="Login" />
       </form>
     </div>
   );
