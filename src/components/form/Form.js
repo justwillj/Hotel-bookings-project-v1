@@ -16,14 +16,16 @@ const Form = () => {
     navigate("/reservations");
   };
   return (
-    <div className="main">
-      <form onSubmit={formSubmit} noValidate>
-        <h1>Login</h1>
-        {error ? <p className="error">Invalid email or password</p> : null}
-        <Input label="Email:" type="email" />
-        <Input label="Password:" type="email" />
-        <Button onClick={formSubmit} value="Login" />
-      </form>
+    <div className="login-main">
+      <div className="main">
+        <form onSubmit={formSubmit} noValidate>
+          <h1>Login</h1>
+          {error ? <p className="error">Invalid email or password</p> : null}
+          <Input label="Email:" type="email" />
+          <Input label="Password:" type="email" />
+          <Button className="login-btn" onClick={formSubmit} value="Login" />
+        </form>
+      </div>
     </div>
   );
 };

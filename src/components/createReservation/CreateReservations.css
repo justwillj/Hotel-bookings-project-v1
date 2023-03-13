@@ -1,30 +1,32 @@
-.create-btn{
-    width: 90%;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
+.create-btn {
+  width: 90%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
-select{
-    position: relative;
-    display: block;
-    width: 93%;
-    margin: 0 auto;
-    font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
-    font-size: 18px;
-    color: #60666d;
+select {
+  position: relative;
+  display: block;
+  width: 93%;
+  margin: 0 auto;
+  font-family: "Open Sans", "Helvetica Neue", "Segoe UI", "Calibri", "Arial",
+    sans-serif;
+  font-size: 18px;
+  color: #60666d;
 }
 
 .error {
-    font-family:Arial, Helvetica, sans-serif;
-    position: absolute;
-    font-size: 1.2rem;
-    color: red;
-    margin-top: -1rem;
-    margin-left: 2rem;
-  }
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  font-size: 1.2rem;
+  color: red;
+  margin-top: -1rem;
+  margin-left: 2rem;
+}
 
-  .main-create {
-    text-align: center;
-  }
-
- 
+.main-create {
+  text-align: center;
+}
+h1 {
+  font-size: 2.5rem;
+}
