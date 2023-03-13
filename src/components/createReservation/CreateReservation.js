@@ -116,6 +116,8 @@ const CreateReservation = () => {
   };
 
   const addData = () => {
+    //Link that helped me with this
+    //https://blog.logrocket.com/how-to-use-axios-post-requests/
     axios.post(`https://640d0c1b1a18a5db83702985.mockapi.io/reservations`, {
       guestEmail: guestEmail.value,
       roomTypeId: roomType.value,
@@ -125,7 +127,7 @@ const CreateReservation = () => {
   };
 
   return (
-    <div>
+    <div className="main-create">
       <h1>Create Reservation Page</h1>
       <form className="main" onSubmit={addNewReservation} noValidate>
         <Input
@@ -168,6 +170,7 @@ const CreateReservation = () => {
             ) : null;
           })}
         </select>
+        <br></br>
         {roomType.error ? (
           <p className="error">Must select a room type</p>
         ) : null}
