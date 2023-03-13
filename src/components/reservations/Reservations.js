@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom/dist";
+import axios from "axios";
 import Button from "../button/Button";
 import Card from "../card/Card";
 import "./Reservations.css";
@@ -44,6 +45,16 @@ const Reservations = () => {
     getAllData();
   }, []);
 
+  const deleteReservation = (id) => {
+    //Link that helped me with this
+    //https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
+    axios
+      .delete(`https://640d0c1b1a18a5db83702985.mockapi.io/reservations/${id}`)
+      .then(() => {
+        getAllData();
+      });
+  };
+
   return (
     <div>
       <h1>Reservations Page</h1>
@@ -73,6 +84,7 @@ const Reservations = () => {
               guestEmail={reservation.guestEmail}
               checkInDate={reservation.checkInDate}
               numberOfNights={reservation.numberOfNights}
+              onClick={() => deleteReservation(reservation.id)}
             />
 
             // <h3>{reservation.guestEmail}</h3>

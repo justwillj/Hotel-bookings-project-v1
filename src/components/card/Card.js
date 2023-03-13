@@ -1,6 +1,13 @@
 import Button from "../button/Button";
 import "./Card.css";
-const Card = ({ guestEmail, roomName, checkInDate, numberOfNights, total }) => {
+const Card = ({
+  guestEmail,
+  roomName,
+  checkInDate,
+  numberOfNights,
+  total,
+  onClick,
+}) => {
   return (
     <div className="card">
       <h1>Guest Email: {guestEmail}</h1>
@@ -10,7 +17,7 @@ const Card = ({ guestEmail, roomName, checkInDate, numberOfNights, total }) => {
       <h1>{total}</h1>
 
       <Button className="card-btn" value="Edit" />
-      <Button className="card-btn" value="Delete" />
+      <Button className="card-btn" value="Delete" onClick={onClick} />
     </div>
   );
 };
