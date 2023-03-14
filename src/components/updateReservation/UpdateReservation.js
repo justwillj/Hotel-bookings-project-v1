@@ -211,7 +211,7 @@ const UpdateReservation = () => {
         {roomType.error ? (
           <p className="error">Must select a room type</p>
         ) : null}
-        <Button type="submit" value="Create" className="create-btn" />
+        <Button type="submit" value="Update" className="create-btn" />
       </form>
     </div>
   );

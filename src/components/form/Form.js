@@ -24,6 +24,9 @@ const Form = () => {
         password: password,
       })
       .then((res) => {
+        if (!res.status === 200) {
+          throw Error;
+        }
         const role = res.data.role;
         console.log(role);
         console.log(res);

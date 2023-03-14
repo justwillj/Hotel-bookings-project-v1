@@ -1,6 +1,6 @@
 import "./NavBar.css";
 import { Link, NavLink } from "react-router-dom";
-const NavBar = ({}) => {
+const NavBar = ({ logout }) => {
   return (
     <nav>
       <div className="header">
@@ -15,7 +15,11 @@ const NavBar = ({}) => {
           <NavLink to="/room-types"> Room Types</NavLink>
         </li>
 
-        <li>Logout</li>
+        <li>
+          <NavLink to="/" onClick={logout}>
+            Logout
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

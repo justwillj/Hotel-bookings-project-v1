@@ -6,8 +6,11 @@ import { BrowserRouter } from "react-router-dom/dist";
 import Reservations from "../reservations/Reservations";
 import CreateReservation from "../createReservation/CreateReservation";
 import UpdateReservation from "../updateReservation/UpdateReservation";
+import { useState } from "react";
 
 function App() {
+  const [role, setRole] = useState("");
+  const logout = () => {};
   return (
     <div>
       <BrowserRouter>
