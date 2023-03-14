@@ -1,5 +1,5 @@
 import "./NavBar.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const NavBar = ({}) => {
   return (
     <nav>
@@ -7,8 +7,14 @@ const NavBar = ({}) => {
         <h2>Hotel Bookings</h2>
       </div>
       <ul>
-        <li>Reservations</li>
-        <li>Room Types</li>
+        <li>
+          <NavLink to="/reservations">Reservations</NavLink>
+        </li>
+
+        <li>
+          <NavLink to="/room-types"> Room Types</NavLink>
+        </li>
+
         <li>Logout</li>
       </ul>
     </nav>

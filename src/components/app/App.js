@@ -10,8 +10,8 @@ import UpdateReservation from "../updateReservation/UpdateReservation";
 function App() {
   return (
     <div>
-      <NavBar />
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route exact path="/" element={<Form />}></Route>
           <Route exact path="/reservations" element={<Reservations />}></Route>

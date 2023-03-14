@@ -5,3 +5,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## CSS Links
 
 Button : https://getcssscan.com/css-buttons-examples
+Spinner : https://loading.io/css/

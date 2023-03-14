@@ -4,6 +4,7 @@ import axios from "axios";
 import Button from "../button/Button";
 import Card from "../card/Card";
 import "./Reservations.css";
+import Spinner from "../spinner/Spinner";
 const Reservations = () => {
   //Holds the reservations data
   const [reservationsData, setReservationsData] = useState([]);
@@ -56,8 +57,10 @@ const Reservations = () => {
   };
 
   return (
-    <div>
+    <div className="reservation-main">
       <h1>Reservations Page</h1>
+      {dataState.error ? <h2>Oops something went wrong</h2> : null}
+      {!dataState.loading ? <Spinner /> : null}
       <div className="grid">
         {reservationsData.map((reservation, index) => {
           return (
