@@ -20,8 +20,16 @@ const Reservations = () => {
     //Link that helped me with this
     //https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
     Promise.all([
-      fetch("https://640d0c1b1a18a5db83702985.mockapi.io/reservations"),
-      fetch("https://640d0c1b1a18a5db83702985.mockapi.io/room-types"),
+      fetch("http://localhost:8080/reservations", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }),
+      fetch("http://localhost:8080/room-types", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }),
     ])
       .then(([resReservations, resRoomTypes]) => {
         if (!resReservations.ok || !resRoomTypes.ok) {
@@ -50,7 +58,11 @@ const Reservations = () => {
     //Link that helped me with this
     //https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
     axios
-      .delete(`https://640d0c1b1a18a5db83702985.mockapi.io/reservations/${id}`)
+      .delete(`http://localhost:8080/reservations/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      })
       .then(() => {
         getAllData();
       });

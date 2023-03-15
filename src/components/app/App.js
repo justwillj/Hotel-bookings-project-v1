@@ -10,13 +10,17 @@ import { useState } from "react";
 
 function App() {
   const [role, setRole] = useState("");
-  const logout = () => {};
+  const logout = () => {
+    sessionStorage.setItem("token", "");
+  };
   return (
     <div>
       <BrowserRouter>
-        <NavBar />
+        <NavBar logout={logout} />
+
         <Routes>
           <Route exact path="/" element={<Form />}></Route>
+
           <Route exact path="/reservations" element={<Reservations />}></Route>
           <Route
             exact

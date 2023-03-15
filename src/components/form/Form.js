@@ -1,3 +1,4 @@
+import { configure } from "@testing-library/react";
 import axios from "axios";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom/dist";
@@ -7,11 +8,24 @@ import "./Form.css";
 const Form = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState(false);
   //Link that helped me with this
   //https://bobbyhadz.com/blog/react-onclick-redirect
   const navigate = useNavigate();
+
+  // let init = {
+  //   method: "POST",
+  //   headers: new Headers({
+  //     "Content-Type": "application/json",
+  //     "Access-Control-Allow-Headers": "*",
+  //     "Access-Control-Allow-Origin": "*",
+  //     "Access-Control-Allow-Methods": "*",
+  //     withCredentials: true,
+  //     crossorigin: true,
+  //     mode: "cors",
+  //     Authorization: sessionStorage.getItem("token"),
+  //   }),
+  // };
 
   const formLogin = (e) => {
     e.preventDefault();
@@ -19,23 +33,22 @@ const Form = () => {
     //Link that helped me with this
     //https://blog.logrocket.com/how-to-use-axios-post-requests/
     axios
-      .post("https://reqres.in/api/login", {
+      .post("http://localhost:8080/login", {
         email: email,
         password: password,
       })
       .then((res) => {
-        if (!res.status === 200) {
+        if (!res.status == 200) {
           throw Error;
         }
-        const role = res.data.role;
-        console.log(role);
-        console.log(res);
+        // const role = res.data.role;
+        // console.log(role);
+        sessionStorage.setItem("token", res.data.token);
         navigate("/reservations");
       })
       .catch((err) => {
         setError(true);
       });
-    // navigate("/reservations");
   };
 
   const InputOnChange = (e) => {

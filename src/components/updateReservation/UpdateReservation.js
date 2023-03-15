@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { isValidDate, isValidEmail, isValidNumber } from "../../validation";
 import Button from "../button/Button";
 import Input from "../input/Input";
+import Spinner from "../spinner/Spinner";
 import "./UpdateReservation.css";
 const UpdateReservation = () => {
   const navigate = useNavigate();
@@ -31,8 +32,16 @@ const UpdateReservation = () => {
     //Link that helped me with this
     //https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
     Promise.all([
-      fetch("https://640d0c1b1a18a5db83702985.mockapi.io/reservations"),
-      fetch("https://640d0c1b1a18a5db83702985.mockapi.io/room-types"),
+      fetch("http://localhost:8080/reservations", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }),
+      fetch("http://localhost:8080/room-types", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }),
     ])
       .then(([resReservations, resRoomTypes]) => {
         if (!resReservations.ok || !resRoomTypes.ok) {
@@ -54,6 +63,7 @@ const UpdateReservation = () => {
    * Loads the getAllData function when the page is opened
    */
   useEffect(() => {
+    console.log(sessionStorage.getItem("token"));
     loadReservation();
     getAllData();
   }, []);
@@ -121,19 +131,28 @@ const UpdateReservation = () => {
     //Link that helped me with this
     //https://www.youtube.com/watch?v=GBbGEuZdyRg
     axios.put(
-      `https://640d0c1b1a18a5db83702985.mockapi.io/reservations/${id}`,
+      `http://localhost:8080/reservations/${id}`,
       {
         guestEmail: guestEmail.value,
         roomTypeId: roomType.value,
         checkInDate: checkInDate.value,
         numberOfNights: numberOfNights.value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
       }
     );
   };
 
   const loadReservation = () => {
     axios
-      .get(`https://640d0c1b1a18a5db83702985.mockapi.io/reservations/${id}`)
+      .get(`http://localhost:8080/reservations/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      })
       .then((reservationRes) => {
         if (!reservationRes.status == 200) {
           throw Error;
@@ -158,7 +177,8 @@ const UpdateReservation = () => {
             ...roomType,
             value: reservationRes.data.roomTypeId,
             error: false,
-          })
+          }),
+          setDataState({ ...dataState, loading: true, error: false })
         );
       })
       .catch((err) => {
@@ -169,50 +189,54 @@ const UpdateReservation = () => {
   return (
     <div className="main-create">
       <h1>Update Reservation Page</h1>
-      <form className="main" onSubmit={updateOldReservation} noValidate>
-        <Input
-          label="Guest Email:"
-          type="email"
-          value={guestEmail.value}
-          onChange={InputOnChange}
-        />
-        {guestEmail.error ? (
-          <p className="error">Must be a valid email</p>
-        ) : null}
-        <Input
-          label="Check-in date:"
-          type="text"
-          value={checkInDate.value}
-          onChange={InputOnChange}
-        />
-        {checkInDate.error ? (
-          <p className="error">Date must be mm-dd-yyyy</p>
-        ) : null}
-        <Input
-          label="Number of nights:"
-          type="number"
-          value={numberOfNights.value}
-          onChange={InputOnChange}
-        />
-        {numberOfNights.error ? (
-          <p className="error">Must be number greater than zero</p>
-        ) : null}
-        <label htmlFor="Room Type:">Room Type:</label>
-        <select value={roomType.value} onChange={selectOnChange}>
-          {roomTypesData.map((test) => {
-            return test.active == true ? (
-              <option key={test.id} value={test.id}>
-                {test.name}
-              </option>
-            ) : null;
-          })}
-        </select>
-        <br></br>
-        {roomType.error ? (
-          <p className="error">Must select a room type</p>
-        ) : null}
-        <Button type="submit" value="Update" className="create-btn" />
-      </form>
+      {!dataState.loading ? (
+        <Spinner />
+      ) : (
+        <form className="main" onSubmit={updateOldReservation} noValidate>
+          <Input
+            label="Guest Email:"
+            type="email"
+            value={guestEmail.value}
+            onChange={InputOnChange}
+          />
+          {guestEmail.error ? (
+            <p className="error">Must be a valid email</p>
+          ) : null}
+          <Input
+            label="Check-in date:"
+            type="text"
+            value={checkInDate.value}
+            onChange={InputOnChange}
+          />
+          {checkInDate.error ? (
+            <p className="error">Date must be mm-dd-yyyy</p>
+          ) : null}
+          <Input
+            label="Number of nights:"
+            type="number"
+            value={numberOfNights.value}
+            onChange={InputOnChange}
+          />
+          {numberOfNights.error ? (
+            <p className="error">Must be number greater than zero</p>
+          ) : null}
+          <label htmlFor="Room Type:">Room Type:</label>
+          <select value={roomType.value} onChange={selectOnChange}>
+            {roomTypesData.map((test) => {
+              return test.active == true ? (
+                <option key={test.id} value={test.id}>
+                  {test.name}
+                </option>
+              ) : null;
+            })}
+          </select>
+          <br></br>
+          {roomType.error ? (
+            <p className="error">Must select a room type</p>
+          ) : null}
+          <Button type="submit" value="Update" className="create-btn" />
+        </form>
+      )}
     </div>
   );
 };
