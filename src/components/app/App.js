@@ -7,9 +7,9 @@ import Reservations from "../reservations/Reservations";
 import CreateReservation from "../createReservation/CreateReservation";
 import UpdateReservation from "../updateReservation/UpdateReservation";
 import { useState } from "react";
+import PrivateRoute from "../privateRoute/PrivateRoute";
 
 function App() {
-  const [role, setRole] = useState("");
   const logout = () => {
     sessionStorage.setItem("token", "");
   };
@@ -21,7 +21,15 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Form />}></Route>
 
-          <Route exact path="/reservations" element={<Reservations />}></Route>
+          <Route
+            exact
+            path="/reservations"
+            element={
+              <PrivateRoute>
+                <Reservations />
+              </PrivateRoute>
+            }
+          ></Route>
           <Route
             exact
             path="/reservations/create"
