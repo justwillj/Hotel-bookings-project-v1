@@ -4,28 +4,16 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom/dist";
 import Button from "../button/Button";
 import Input from "../input/Input";
+import jwt from "jwt-decode";
 import "./Form.css";
-const Form = () => {
+const Form = ({ setStatus }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+
   //Link that helped me with this
   //https://bobbyhadz.com/blog/react-onclick-redirect
   const navigate = useNavigate();
-
-  // let init = {
-  //   method: "POST",
-  //   headers: new Headers({
-  //     "Content-Type": "application/json",
-  //     "Access-Control-Allow-Headers": "*",
-  //     "Access-Control-Allow-Origin": "*",
-  //     "Access-Control-Allow-Methods": "*",
-  //     withCredentials: true,
-  //     crossorigin: true,
-  //     mode: "cors",
-  //     Authorization: sessionStorage.getItem("token"),
-  //   }),
-  // };
 
   const formLogin = (e) => {
     e.preventDefault();
@@ -41,9 +29,11 @@ const Form = () => {
         if (!res.status == 200) {
           throw Error;
         }
-        // const role = res.data.role;
-        // console.log(role);
+        const user = jwt(res.data.token);
+        sessionStorage.setItem("role", user.roles);
+        sessionStorage.setItem("user", user.sub);
         sessionStorage.setItem("token", res.data.token);
+        setStatus(true);
         navigate("/reservations");
       })
       .catch((err) => {
