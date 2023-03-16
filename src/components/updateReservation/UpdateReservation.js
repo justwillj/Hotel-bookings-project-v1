@@ -63,7 +63,6 @@ const UpdateReservation = () => {
    * Loads the getAllData function when the page is opened
    */
   useEffect(() => {
-    console.log(sessionStorage.getItem("token"));
     loadReservation();
     getAllData();
   }, []);

@@ -1,8 +1,8 @@
 import "./NavBar.css";
 import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-const NavBar = ({ logout, status }) => {
-  console.log(status);
+import ActiveLink from "../activeLink/ActiveLink";
+const NavBar = ({ logout }) => {
   return (
     <nav>
       <div className="header">
@@ -10,15 +10,12 @@ const NavBar = ({ logout, status }) => {
       </div>
       <ul>
         {sessionStorage.getItem("token") != "" ? (
-          <li>
-            <NavLink to="/reservations">Reservations</NavLink>
-          </li>
+          <ActiveLink to="/reservations">Reservations</ActiveLink>
         ) : null}
+
         {sessionStorage.getItem("token") != "" &&
         sessionStorage.getItem("role") == "manager" ? (
-          <li>
-            <NavLink to="/room-types"> Room Types</NavLink>
-          </li>
+          <ActiveLink to="/room-types">Room Types</ActiveLink>
         ) : null}
         {sessionStorage.getItem("token") != "" ? (
           <li>

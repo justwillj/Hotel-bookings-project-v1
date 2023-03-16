@@ -52,7 +52,7 @@ const Reservations = () => {
    */
   useEffect(() => {
     getAllData();
-  }, []);
+  }, [reservationsData]);
 
   const deleteReservation = (id) => {
     //Link that helped me with this

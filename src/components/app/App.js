@@ -8,16 +8,29 @@ import CreateReservation from "../createReservation/CreateReservation";
 import UpdateReservation from "../updateReservation/UpdateReservation";
 import { useState, useEffect } from "react";
 import PrivateRoute from "../privateRoute/PrivateRoute";
+import PrivateRouteManager from "../privateRouteManager/PrivateRouteManager";
+import RoomTypes from "../room-types/RoomTypes";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const logout = () => {
     sessionStorage.setItem("token", "");
-    const data = window.localStorage.getItem("logStatus");
-    setLoggedIn(data);
+    sessionStorage.setItem("role", "");
+    sessionStorage.setItem("user", "");
     setLoggedIn(false);
   };
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("logStatus");
+    setLoggedIn(data);
+  }, []);
+
+  useEffect(() => {
+    //link that helped me with this
+    //https://www.youtube.com/watch?v=rWfhwW9forg
+    window.localStorage.setItem("logStatus", loggedIn);
+  }, [loggedIn]);
 
   return (
     <div>
@@ -49,6 +62,16 @@ function App() {
             exact
             path="/reservations/edit/:id"
             element={<UpdateReservation />}
+          ></Route>
+
+          <Route
+            exact
+            path="/room-types"
+            element={
+              <PrivateRouteManager>
+                <RoomTypes />
+              </PrivateRouteManager>
+            }
           ></Route>
         </Routes>
       </BrowserRouter>
