@@ -5,6 +5,7 @@ import Button from "../button/Button";
 import Card from "../card/Card";
 import "./Reservations.css";
 import Spinner from "../spinner/Spinner";
+import ServerError from "../serverError/ServerError";
 const Reservations = () => {
   //Holds the reservations data
   const [reservationsData, setReservationsData] = useState([]);
@@ -52,9 +53,10 @@ const Reservations = () => {
    */
   useEffect(() => {
     getAllData();
-  }, [reservationsData]);
+  }, []);
 
   const deleteReservation = (id) => {
+    setDataState({ ...dataState, loading: false, error: false });
     //Link that helped me with this
     //https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
     axios
@@ -65,50 +67,61 @@ const Reservations = () => {
       })
       .then(() => {
         getAllData();
+      })
+      .catch((err) => {
+        setDataState({ ...dataState, loading: true, error: true });
       });
   };
 
   return (
     <div className="reservation-main">
       <h1>Reservations Page</h1>
-      {dataState.error ? <h2>Oops something went wrong</h2> : null}
       {!dataState.loading ? <Spinner /> : null}
-      <div className="grid">
-        {reservationsData.map((reservation, index) => {
-          return (
-            <Card
-              total={roomTypesData.map((test) => {
-                return (
-                  <div key={test.id}>
-                    {reservation.roomTypeId == test.id ? (
-                      <h1>Total: ${reservation.numberOfNights * test.rate}</h1>
-                    ) : null}
-                  </div>
-                );
-              })}
-              roomName={roomTypesData.map((test, index) => {
-                return (
-                  <div key={test.id}>
-                    {reservation.roomTypeId == test.id ? (
-                      <h1>Room name: {test.name}</h1>
-                    ) : null}
-                  </div>
-                );
-              })}
-              key={reservation.id}
-              guestEmail={reservation.guestEmail}
-              checkInDate={reservation.checkInDate}
-              numberOfNights={reservation.numberOfNights}
-              onClick={() => deleteReservation(reservation.id)}
-              endpoint={`edit/${reservation.id}`}
-            />
-          );
-        })}
-      </div>
+      <br></br>
+      <div className="reservation-error">
+        <Link to="/reservations/create">
+          <Button className="create-reservations" value="Create" />
+        </Link>
 
-      <Link to="/reservations/create">
-        <Button value="Create" />
-      </Link>
+        {dataState.error ? (
+          <ServerError />
+        ) : (
+          <div className="grid">
+            {reservationsData.map((reservation) => {
+              return (
+                <Card
+                  total={roomTypesData.map((room) => {
+                    return (
+                      <div key={room.id}>
+                        {reservation.roomTypeId == room.id ? (
+                          <h1>
+                            Total: ${reservation.numberOfNights * room.rate}
+                          </h1>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                  roomName={roomTypesData.map((room) => {
+                    return (
+                      <div key={room.id}>
+                        {reservation.roomTypeId == room.id ? (
+                          <h1>Room name: {room.name}</h1>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                  key={reservation.id}
+                  guestEmail={reservation.guestEmail}
+                  checkInDate={reservation.checkInDate}
+                  numberOfNights={reservation.numberOfNights}
+                  onClick={() => deleteReservation(reservation.id)}
+                  endpoint={`edit/${reservation.id}`}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

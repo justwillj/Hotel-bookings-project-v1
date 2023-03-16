@@ -7,3 +7,13 @@
 .reservation-main{
     text-align: center;
 }
+.create-reservations{
+    font-size: 2rem;
+    width: 15%;
+    padding-bottom: 1rem;
+}
+.reservation-error{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
