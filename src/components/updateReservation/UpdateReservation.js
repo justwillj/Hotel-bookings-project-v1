@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { isValidDate, isValidEmail, isValidNumber } from "../../validation";
 import Button from "../button/Button";
 import Input from "../input/Input";
+import ServerError from "../serverError/ServerError";
 import Spinner from "../spinner/Spinner";
 import "./UpdateReservation.css";
 const UpdateReservation = () => {
@@ -122,27 +123,36 @@ const UpdateReservation = () => {
 
     if (formIsValid === true) {
       updateData();
-      navigate("/reservations");
+      e.preventDefault();
     }
   };
 
   const updateData = () => {
+    setDataState({ ...dataState, loading: false, error: false });
+
     //Link that helped me with this
     //https://www.youtube.com/watch?v=GBbGEuZdyRg
-    axios.put(
-      `http://localhost:8080/reservations/${id}`,
-      {
-        guestEmail: guestEmail.value,
-        roomTypeId: roomType.value,
-        checkInDate: checkInDate.value,
-        numberOfNights: numberOfNights.value,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+    axios
+      .put(
+        `http://localhost:8080/reservations/${id}`,
+        {
+          guestEmail: guestEmail.value,
+          roomTypeId: roomType.value,
+          checkInDate: checkInDate.value,
+          numberOfNights: numberOfNights.value,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then(() => {
+        navigate("/reservations");
+      })
+      .catch((err) => {
+        setDataState({ ...dataState, loading: true, error: true });
+      });
   };
 
   const loadReservation = () => {
@@ -181,15 +191,16 @@ const UpdateReservation = () => {
         );
       })
       .catch((err) => {
-        console.log(err);
+        setDataState({ ...dataState, loading: true, error: true });
       });
   };
 
   return (
     <div className="main-create">
       <h1>Update Reservation Page</h1>
-      {!dataState.loading ? (
-        <Spinner />
+      {!dataState.loading ? <Spinner /> : null}
+      {dataState.error ? (
+        <ServerError />
       ) : (
         <form className="main" onSubmit={updateOldReservation} noValidate>
           <Input
@@ -221,10 +232,10 @@ const UpdateReservation = () => {
           ) : null}
           <label htmlFor="Room Type:">Room Type:</label>
           <select value={roomType.value} onChange={selectOnChange}>
-            {roomTypesData.map((test) => {
-              return test.active == true ? (
-                <option key={test.id} value={test.id}>
-                  {test.name}
+            {roomTypesData.map((room) => {
+              return room.active == true ? (
+                <option key={room.id} value={room.id}>
+                  {room.name}
                 </option>
               ) : null;
             })}
