@@ -11,6 +11,7 @@ import PrivateRoute from "../privateRoute/PrivateRoute";
 import PrivateRouteManager from "../privateRouteManager/PrivateRouteManager";
 import RoomTypes from "../room-types/RoomTypes";
 import CreateRoomTypes from "../createRoomTypes/CreateRoomTypes";
+import UpdateRoomType from "../updateRoomType/UpdateRoomType";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -89,6 +90,16 @@ function App() {
             element={
               <PrivateRouteManager>
                 <CreateRoomTypes />
+              </PrivateRouteManager>
+            }
+          ></Route>
+
+          <Route
+            exact
+            path="/room-types/edit/:id"
+            element={
+              <PrivateRouteManager>
+                <UpdateRoomType />
               </PrivateRouteManager>
             }
           ></Route>
