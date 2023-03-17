@@ -90,7 +90,7 @@ const Reservations = () => {
             {reservationsData.map((reservation) => {
               return (
                 <Card
-                  total={roomTypesData.map((room) => {
+                  InputFive={roomTypesData.map((room) => {
                     return (
                       <div key={room.id}>
                         {reservation.roomTypeId == room.id ? (
@@ -101,7 +101,7 @@ const Reservations = () => {
                       </div>
                     );
                   })}
-                  roomName={roomTypesData.map((room) => {
+                  InputTwo={roomTypesData.map((room) => {
                     return (
                       <div key={room.id}>
                         {reservation.roomTypeId == room.id ? (
@@ -111,9 +111,9 @@ const Reservations = () => {
                     );
                   })}
                   key={reservation.id}
-                  guestEmail={reservation.guestEmail}
-                  checkInDate={reservation.checkInDate}
-                  numberOfNights={reservation.numberOfNights}
+                  InputOne={reservation.guestEmail}
+                  InputThree={reservation.checkInDate}
+                  InputFour={reservation.numberOfNights}
                   onClick={() => deleteReservation(reservation.id)}
                   endpoint={`edit/${reservation.id}`}
                 />
