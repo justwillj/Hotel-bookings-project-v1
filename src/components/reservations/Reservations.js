@@ -116,6 +116,7 @@ const Reservations = () => {
                   InputFour={reservation.numberOfNights}
                   onClick={() => deleteReservation(reservation.id)}
                   endpoint={`edit/${reservation.id}`}
+                  needDelete={true}
                 />
               );
             })}

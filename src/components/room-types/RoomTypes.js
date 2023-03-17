@@ -74,8 +74,8 @@ const RoomTypes = () => {
               return (
                 <Card
                   key={room.id}
-                  InputOne={room.name}
-                  InputTwo={room.description}
+                  InputOne={<p>Name: {room.name}</p>}
+                  InputTwo={<>Description: {room.description}</>}
                   InputThree={<>Rate: ${room.rate}</>}
                   InputFour={
                     room.active == true ? (

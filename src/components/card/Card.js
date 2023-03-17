@@ -9,6 +9,7 @@ const Card = ({
   InputFive,
   onClick,
   endpoint,
+  needDelete,
 }) => {
   return (
     <div className="card">
@@ -20,7 +21,9 @@ const Card = ({
       <Link to={endpoint}>
         <Button className="card-btn" value="Edit" />
       </Link>
-      <Button className="card-btn" value="Delete" onClick={onClick} />
+      {needDelete ? (
+        <Button className="card-btn" value="Delete" onClick={onClick} />
+      ) : null}
     </div>
   );
 };
