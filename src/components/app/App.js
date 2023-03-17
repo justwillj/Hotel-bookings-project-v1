@@ -56,12 +56,20 @@ function App() {
           <Route
             exact
             path="/reservations/create"
-            element={<CreateReservation />}
+            element={
+              <PrivateRoute>
+                <CreateReservation />
+              </PrivateRoute>
+            }
           ></Route>
           <Route
             exact
             path="/reservations/edit/:id"
-            element={<UpdateReservation />}
+            element={
+              <PrivateRoute>
+                <UpdateReservation />
+              </PrivateRoute>
+            }
           ></Route>
 
           <Route
