@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import PrivateRoute from "../privateRoute/PrivateRoute";
 import PrivateRouteManager from "../privateRouteManager/PrivateRouteManager";
 import RoomTypes from "../room-types/RoomTypes";
+import CreateRoomTypes from "../createRoomTypes/CreateRoomTypes";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -78,6 +79,16 @@ function App() {
             element={
               <PrivateRouteManager>
                 <RoomTypes />
+              </PrivateRouteManager>
+            }
+          ></Route>
+
+          <Route
+            exact
+            path="/room-types/create"
+            element={
+              <PrivateRouteManager>
+                <CreateRoomTypes />
               </PrivateRouteManager>
             }
           ></Route>

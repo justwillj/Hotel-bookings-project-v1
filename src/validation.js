@@ -10,3 +10,10 @@ export const isValidNumber = (value) => {
   }
   return true;
 };
+
+export const isValidRoomName = (value) => {
+  if (value.length < 3) {
+    return false;
+  }
+  return true;
+};

@@ -56,24 +56,6 @@ const RoomTypes = () => {
     getAllData();
   }, []);
 
-  const deleteReservation = (id) => {
-    setDataState({ ...dataState, loading: false, error: false });
-    //Link that helped me with this
-    //https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
-    axios
-      .delete(`http://localhost:8080/room-types/${id}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      })
-      .then(() => {
-        getAllData();
-      })
-      .catch((err) => {
-        setDataState({ ...dataState, loading: true, error: true });
-      });
-  };
-
   return (
     <div className="reservation-main">
       <h1>Room Types Page</h1>
@@ -102,7 +84,6 @@ const RoomTypes = () => {
                       <>Status: Inactive</>
                     )
                   }
-                  onClick={() => deleteReservation(room.id)}
                   endpoint={`edit/${room.id}`}
                 />
               );

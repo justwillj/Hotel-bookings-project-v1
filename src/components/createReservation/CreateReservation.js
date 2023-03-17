@@ -128,7 +128,7 @@ const CreateReservation = () => {
   const addData = () => {
     //Link that helped me with this
     //https://blog.logrocket.com/how-to-use-axios-post-requests/
-    setDataState({ ...dataState, loading: true, error: true });
+    setDataState({ ...dataState, loading: true, error: false });
     axios
       .post(
         `http://localhost:8080/reservations`,
