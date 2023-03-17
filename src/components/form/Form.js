@@ -88,7 +88,7 @@ const Form = ({ setStatus }) => {
               />
               <Input
                 label="Password:"
-                type="email"
+                type="password"
                 value={password}
                 onChange={InputOnChange}
               />

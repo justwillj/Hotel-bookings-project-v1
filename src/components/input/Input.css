@@ -19,6 +19,9 @@ input[type="number"] {
   font-size: 1.1rem;
 }
 
+input[type="password"] {
+  font-size: 1.1rem;
+}
 
 input[type="checkbox"] {
   display: inline-block;
