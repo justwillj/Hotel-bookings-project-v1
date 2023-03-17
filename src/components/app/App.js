@@ -1,38 +1,38 @@
-import Form from "../form/Form";
-import NavBar from "../navBar/NavBar";
-import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import { BrowserRouter } from "react-router-dom/dist";
-import Reservations from "../reservations/Reservations";
-import CreateReservation from "../createReservation/CreateReservation";
-import UpdateReservation from "../updateReservation/UpdateReservation";
-import { useState, useEffect } from "react";
-import PrivateRoute from "../privateRoute/PrivateRoute";
-import PrivateRouteManager from "../privateRouteManager/PrivateRouteManager";
-import RoomTypes from "../room-types/RoomTypes";
-import CreateRoomTypes from "../createRoomTypes/CreateRoomTypes";
-import UpdateRoomType from "../updateRoomType/UpdateRoomType";
-import PageNotFound from "../pageNotFound/PageNotFound";
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Form from '../form/Form';
+import NavBar from '../navBar/NavBar';
+import './App.css';
+import Reservations from '../reservations/Reservations';
+import CreateReservation from '../createReservation/CreateReservation';
+import UpdateReservation from '../updateReservation/UpdateReservation';
+
+import PrivateRoute from '../privateRoute/PrivateRoute';
+import PrivateRouteManager from '../privateRouteManager/PrivateRouteManager';
+import RoomTypes from '../room-types/RoomTypes';
+import CreateRoomTypes from '../createRoomTypes/CreateRoomTypes';
+import UpdateRoomType from '../updateRoomType/UpdateRoomType';
+import PageNotFound from '../pageNotFound/PageNotFound';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const logout = () => {
-    sessionStorage.setItem("token", "");
-    sessionStorage.setItem("role", "");
-    sessionStorage.setItem("user", "");
+    sessionStorage.setItem('token', '');
+    sessionStorage.setItem('role', '');
+    sessionStorage.setItem('user', '');
     setLoggedIn(false);
   };
 
   useEffect(() => {
-    const data = window.localStorage.getItem("logStatus");
+    const data = window.localStorage.getItem('logStatus');
     setLoggedIn(data);
   }, []);
 
   useEffect(() => {
-    //link that helped me with this
-    //https://www.youtube.com/watch?v=rWfhwW9forg
-    window.localStorage.setItem("logStatus", loggedIn);
+    // link that helped me with this
+    // https://www.youtube.com/watch?v=rWfhwW9forg
+    window.localStorage.setItem('logStatus', loggedIn);
   }, [loggedIn]);
 
   return (
@@ -41,71 +41,67 @@ function App() {
         <NavBar logout={logout} status={loggedIn} />
 
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={<Form setStatus={setLoggedIn} />}
-          ></Route>
+          <Route exact path="/" element={<Form setStatus={setLoggedIn} />} />
 
           <Route
             exact
             path="/reservations"
-            element={
+            element={(
               <PrivateRoute>
                 <Reservations />
               </PrivateRoute>
-            }
-          ></Route>
+            )}
+          />
           <Route
             exact
             path="/reservations/create"
-            element={
+            element={(
               <PrivateRoute>
                 <CreateReservation />
               </PrivateRoute>
-            }
-          ></Route>
+            )}
+          />
           <Route
             exact
             path="/reservations/edit/:id"
-            element={
+            element={(
               <PrivateRoute>
                 <UpdateReservation />
               </PrivateRoute>
-            }
-          ></Route>
+            )}
+          />
 
           <Route
             exact
             path="/room-types"
-            element={
+            element={(
               <PrivateRouteManager>
                 <RoomTypes />
               </PrivateRouteManager>
-            }
-          ></Route>
+            )}
+          />
 
           <Route
             exact
             path="/room-types/create"
-            element={
+            element={(
               <PrivateRouteManager>
                 <CreateRoomTypes />
               </PrivateRouteManager>
-            }
-          ></Route>
+            )}
+          />
 
           <Route
             exact
             path="/room-types/edit/:id"
-            element={
+            element={(
               <PrivateRouteManager>
                 <UpdateRoomType />
               </PrivateRouteManager>
-            }
-          ></Route>
+            )}
+          />
 
-          <Route exact path="*" element={<PageNotFound />}></Route>
+          <Route exact path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,37 +1,33 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { act } from "react-dom/test-utils";
-import { useNavigate } from "react-router";
-import {
-  isValidDate,
-  isValidEmail,
-  isValidNumber,
-  isValidRoomName,
-} from "../../validation";
-import Button from "../button/Button";
-import Input from "../input/Input";
-import ServerError from "../serverError/ServerError";
-import Spinner from "../spinner/Spinner";
-import "./CreateRoomTypes.css";
-const CreateRoomTypes = () => {
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+
+import { isValidNumber, isValidRoomName } from '../../validation';
+import Button from '../button/Button';
+import Input from '../input/Input';
+import ServerError from '../serverError/ServerError';
+import Spinner from '../spinner/Spinner';
+import './CreateRoomTypes.css';
+
+function CreateRoomTypes() {
   const navigate = useNavigate();
-  const [roomName, setRoomName] = useState({ value: "", error: false });
+  const [roomName, setRoomName] = useState({ value: '', error: false });
 
-  const [description, setDescription] = useState({ value: "", error: false });
+  const [description, setDescription] = useState({ value: '', error: false });
 
-  const [rate, setRate] = useState({ value: "", error: false });
+  const [rate, setRate] = useState({ value: '', error: false });
 
   const [activeStatus, setActiveStatus] = useState({
     value: false,
-    error: false,
+    error: false
   });
 
-  //Holds the reservations data
+  // Holds the reservations data
   const [reservationsData, setReservationsData] = useState([]);
 
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  //Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
   const descriptionOnChange = (e) => {
@@ -39,21 +35,21 @@ const CreateRoomTypes = () => {
   };
 
   const InputOnChange = (e) => {
-    //get the name from the input
+    // get the name from the input
     const inputName = e.target.name;
-    //update state variables accordingly
+    // update state variables accordingly
     switch (inputName) {
-      case "Name:":
+      case 'Name:':
         setRoomName({ ...roomName, value: e.target.value, error: false });
         break;
-      case "Rate:":
+      case 'Rate:':
         setRate({ ...rate, value: e.target.value, error: false });
         break;
-      case "Active Status:":
+      case 'Active Status:':
         setActiveStatus({
           ...activeStatus,
           value: !activeStatus.value,
-          error: false,
+          error: false
         });
         break;
       default:
@@ -82,26 +78,26 @@ const CreateRoomTypes = () => {
   };
 
   const addData = () => {
-    //Link that helped me with this
-    //https://blog.logrocket.com/how-to-use-axios-post-requests/
+    // Link that helped me with this
+    // https://blog.logrocket.com/how-to-use-axios-post-requests/
     setDataState({ ...dataState, loading: true, error: false });
     axios
       .post(
-        `http://localhost:8080/room-types`,
+        'http://localhost:8080/room-types',
         {
           name: roomName.value,
           description: description.value,
           rate: rate.value,
-          active: activeStatus.value,
+          active: activeStatus.value
         },
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
+          }
         }
       )
       .then(() => {
-        navigate("/room-types");
+        navigate('/room-types');
       })
       .catch((err) => {
         setDataState({ ...dataState, loading: false, error: true });
@@ -127,10 +123,7 @@ const CreateRoomTypes = () => {
           ) : null}
 
           <label htmlFor="Description:">Description:</label>
-          <textarea
-            value={description.value}
-            onChange={descriptionOnChange}
-          ></textarea>
+          <textarea value={description.value} onChange={descriptionOnChange} />
 
           <Input
             label="Rate:"
@@ -154,5 +147,5 @@ const CreateRoomTypes = () => {
       )}
     </div>
   );
-};
+}
 export default CreateRoomTypes;

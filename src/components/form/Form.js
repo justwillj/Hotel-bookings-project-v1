@@ -1,49 +1,49 @@
-import { configure } from "@testing-library/react";
-import axios from "axios";
-import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom/dist";
-import Button from "../button/Button";
-import Input from "../input/Input";
-import jwt from "jwt-decode";
-import "./Form.css";
-import Spinner from "../spinner/Spinner";
-import ServerError from "../serverError/ServerError";
-const Form = ({ setStatus }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom/dist';
+import jwt from 'jwt-decode';
+import Button from '../button/Button';
+import Input from '../input/Input';
+import './Form.css';
+import Spinner from '../spinner/Spinner';
+import ServerError from '../serverError/ServerError';
+
+function Form({ setStatus }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  //Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: true, error: false });
 
-  //Link that helped me with this
-  //https://bobbyhadz.com/blog/react-onclick-redirect
+  // Link that helped me with this
+  // https://bobbyhadz.com/blog/react-onclick-redirect
   const navigate = useNavigate();
 
   const formLogin = (e) => {
     e.preventDefault();
     setDataState({ ...dataState, loading: false, error: false });
-    //Link that helped me with this
-    //https://blog.logrocket.com/how-to-use-axios-post-requests/
+    // Link that helped me with this
+    // https://blog.logrocket.com/how-to-use-axios-post-requests/
     axios
-      .post("http://localhost:8080/login", {
-        email: email,
-        password: password,
+      .post('http://localhost:8080/login', {
+        email,
+        password
       })
       .then((res) => {
         if (!res.status == 200) {
           throw Error(setError(true));
         }
         const user = jwt(res.data.token);
-        sessionStorage.setItem("role", user.roles);
-        sessionStorage.setItem("user", user.sub);
-        sessionStorage.setItem("token", res.data.token);
+        sessionStorage.setItem('role', user.roles);
+        sessionStorage.setItem('user', user.sub);
+        sessionStorage.setItem('token', res.data.token);
         setDataState({ ...dataState, loading: false, error: false });
         setStatus(true);
-        navigate("/reservations");
+        navigate('/reservations');
       })
       .catch((err) => {
-        if (err.code === "ERR_BAD_REQUEST") {
+        if (err.code === 'ERR_BAD_REQUEST') {
           setError(true);
           setDataState({ ...dataState, loading: true, error: false });
         } else {
@@ -53,14 +53,14 @@ const Form = ({ setStatus }) => {
   };
 
   const InputOnChange = (e) => {
-    //get the name from the input
+    // get the name from the input
     const inputName = e.target.name;
-    //update state variables accordingly
+    // update state variables accordingly
     switch (inputName) {
-      case "Email:":
+      case 'Email:':
         setEmail(e.target.value);
         break;
-      case "Password:":
+      case 'Password:':
         setPassword(e.target.value);
         break;
       default:
@@ -99,5 +99,5 @@ const Form = ({ setStatus }) => {
       </div>
     </div>
   );
-};
+}
 export default Form;

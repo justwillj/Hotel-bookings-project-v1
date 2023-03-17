@@ -1,7 +1,9 @@
-import Button from "../button/Button";
-import { Link } from "react-router-dom";
-import "./Card.css";
-const Card = ({
+import { Link } from 'react-router-dom';
+import React from 'react';
+import Button from '../button/Button';
+import './Card.css';
+
+function Card({
   InputOne,
   InputTwo,
   InputThree,
@@ -9,8 +11,8 @@ const Card = ({
   InputFive,
   onClick,
   endpoint,
-  needDelete,
-}) => {
+  needDelete
+}) {
   return (
     <div className="card">
       <h1>{InputOne}</h1>
@@ -26,5 +28,5 @@ const Card = ({
       ) : null}
     </div>
   );
-};
+}
 export default Card;

@@ -1,48 +1,46 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
-import { isValidDate, isValidEmail, isValidNumber } from "../../validation";
-import Button from "../button/Button";
-import Input from "../input/Input";
-import ServerError from "../serverError/ServerError";
-import Spinner from "../spinner/Spinner";
-import "./UpdateReservation.css";
-const UpdateReservation = () => {
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { isValidDate, isValidEmail, isValidNumber } from '../../validation';
+import Button from '../button/Button';
+import Input from '../input/Input';
+import ServerError from '../serverError/ServerError';
+import Spinner from '../spinner/Spinner';
+import './UpdateReservation.css';
+
+function UpdateReservation() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [guestEmail, setGuestEmail] = useState({ value: "", error: false });
+  const [guestEmail, setGuestEmail] = useState({ value: '', error: false });
 
-  const [checkInDate, setCheckInDate] = useState({ value: "", error: false });
+  const [checkInDate, setCheckInDate] = useState({ value: '', error: false });
 
   const [numberOfNights, setNumberOfNights] = useState({
-    value: "",
-    error: false,
+    value: '',
+    error: false
   });
 
-  const [roomType, setRoomType] = useState({ value: "", error: false });
-
-  //Holds the reservations data
-  const [reservationsData, setReservationsData] = useState([]);
+  const [roomType, setRoomType] = useState({ value: '', error: false });
 
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  //Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
   const getAllData = () => {
-    //Link that helped me with this
-    //https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
+    // Link that helped me with this
+    // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
     Promise.all([
-      fetch("http://localhost:8080/reservations", {
+      fetch('http://localhost:8080/reservations', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       }),
-      fetch("http://localhost:8080/room-types", {
+      fetch('http://localhost:8080/room-types', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      }),
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
+      })
     ])
       .then(([resReservations, resRoomTypes]) => {
         if (!resReservations.ok || !resRoomTypes.ok) {
@@ -50,12 +48,11 @@ const UpdateReservation = () => {
         }
         return Promise.all([resReservations.json(), resRoomTypes.json()]);
       })
-      .then(([dataReservations, dataRoomTypes]) => {
-        setReservationsData(dataReservations);
+      .then(([dataRoomTypes]) => {
         setRoomTypesData(dataRoomTypes);
         setDataState({ ...dataState, loading: true, error: false });
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: true, error: true });
       });
   };
@@ -73,21 +70,21 @@ const UpdateReservation = () => {
   };
 
   const InputOnChange = (e) => {
-    //get the name from the input
+    // get the name from the input
     const inputName = e.target.name;
-    //update state variables accordingly
+    // update state variables accordingly
     switch (inputName) {
-      case "Guest Email:":
+      case 'Guest Email:':
         setGuestEmail({ ...guestEmail, value: e.target.value, error: false });
         break;
-      case "Check-in date:":
+      case 'Check-in date:':
         setCheckInDate({ ...checkInDate, value: e.target.value, error: false });
         break;
-      case "Number of nights:":
+      case 'Number of nights:':
         setNumberOfNights({
           ...numberOfNights,
           value: e.target.value,
-          error: false,
+          error: false
         });
         break;
       default:
@@ -115,7 +112,7 @@ const UpdateReservation = () => {
       e.preventDefault();
     }
 
-    if (roomType.value == "") {
+    if (roomType.value == '') {
       setRoomType({ ...roomType, error: true });
       formIsValid = false;
       e.preventDefault();
@@ -130,26 +127,26 @@ const UpdateReservation = () => {
   const updateData = () => {
     setDataState({ ...dataState, loading: false, error: false });
 
-    //Link that helped me with this
-    //https://www.youtube.com/watch?v=GBbGEuZdyRg
+    // Link that helped me with this
+    // https://www.youtube.com/watch?v=GBbGEuZdyRg
     axios
       .put(
         `http://localhost:8080/reservations/${id}`,
         {
-          user: sessionStorage.getItem("user"),
+          user: sessionStorage.getItem('user'),
           guestEmail: guestEmail.value,
           roomTypeId: roomType.value,
           checkInDate: checkInDate.value,
-          numberOfNights: numberOfNights.value,
+          numberOfNights: numberOfNights.value
         },
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
+          }
         }
       )
       .then(() => {
-        navigate("/reservations");
+        navigate('/reservations');
       })
       .catch((err) => {
         setDataState({ ...dataState, loading: true, error: true });
@@ -160,8 +157,8 @@ const UpdateReservation = () => {
     axios
       .get(`http://localhost:8080/reservations/${id}`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       })
       .then((reservationRes) => {
         if (!reservationRes.status == 200) {
@@ -171,22 +168,22 @@ const UpdateReservation = () => {
           setGuestEmail({
             ...guestEmail,
             value: reservationRes.data.guestEmail,
-            error: false,
+            error: false
           }),
           setCheckInDate({
             ...checkInDate,
             value: reservationRes.data.checkInDate,
-            error: false,
+            error: false
           }),
           setNumberOfNights({
             ...numberOfNights,
             value: reservationRes.data.numberOfNights,
-            error: false,
+            error: false
           }),
           setRoomType({
             ...roomType,
             value: reservationRes.data.roomTypeId,
-            error: false,
+            error: false
           }),
           setDataState({ ...dataState, loading: true, error: false })
         );
@@ -234,15 +231,13 @@ const UpdateReservation = () => {
           <label htmlFor="Room Type:">Room Type:</label>
           <select value={roomType.value} onChange={selectOnChange}>
             <option value="">Select your room</option>
-            {roomTypesData.map((room) => {
-              return room.active == true ? (
-                <option key={room.id} value={room.id}>
-                  {room.name}
-                </option>
-              ) : null;
-            })}
+            {roomTypesData.map((room) => (room.active == true ? (
+              <option key={room.id} value={room.id}>
+                {room.name}
+              </option>
+            ) : null))}
           </select>
-          <br></br>
+          <br />
           {roomType.error ? (
             <p className="error">Must select a room type</p>
           ) : null}
@@ -251,5 +246,5 @@ const UpdateReservation = () => {
       )}
     </div>
   );
-};
+}
 export default UpdateReservation;

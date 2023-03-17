@@ -1,47 +1,49 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { isValidDate, isValidEmail, isValidNumber } from "../../validation";
-import Button from "../button/Button";
-import Input from "../input/Input";
-import ServerError from "../serverError/ServerError";
-import Spinner from "../spinner/Spinner";
-import "./CreateReservations.css";
-const CreateReservation = () => {
-  const navigate = useNavigate();
-  const [guestEmail, setGuestEmail] = useState({ value: "", error: false });
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { isValidDate, isValidEmail, isValidNumber } from '../../validation';
+import Button from '../button/Button';
+import Input from '../input/Input';
+import ServerError from '../serverError/ServerError';
+import Spinner from '../spinner/Spinner';
 
-  const [checkInDate, setCheckInDate] = useState({ value: "", error: false });
+import './CreateReservations.css';
+
+function CreateReservation() {
+  const navigate = useNavigate();
+  const [guestEmail, setGuestEmail] = useState({ value: '', error: false });
+
+  const [checkInDate, setCheckInDate] = useState({ value: '', error: false });
 
   const [numberOfNights, setNumberOfNights] = useState({
-    value: "",
-    error: false,
+    value: '',
+    error: false
   });
 
-  const [roomType, setRoomType] = useState({ value: "", error: false });
+  const [roomType, setRoomType] = useState({ value: '', error: false });
 
-  //Holds the reservations data
+  // Holds the reservations data
   const [reservationsData, setReservationsData] = useState([]);
 
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  //Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: true, error: false });
 
   const getAllData = () => {
-    //Link that helped me with this
-    //https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
+    // Link that helped me with this
+    // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
     Promise.all([
-      fetch("http://localhost:8080/reservations", {
+      fetch('http://localhost:8080/reservations', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       }),
-      fetch("http://localhost:8080/room-types", {
+      fetch('http://localhost:8080/room-types', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      }),
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
+      })
     ])
       .then(([resReservations, resRoomTypes]) => {
         if (!resReservations.ok || !resRoomTypes.ok) {
@@ -71,21 +73,21 @@ const CreateReservation = () => {
   };
 
   const InputOnChange = (e) => {
-    //get the name from the input
+    // get the name from the input
     const inputName = e.target.name;
-    //update state variables accordingly
+    // update state variables accordingly
     switch (inputName) {
-      case "Guest Email:":
+      case 'Guest Email:':
         setGuestEmail({ ...guestEmail, value: e.target.value, error: false });
         break;
-      case "Check-in date:":
+      case 'Check-in date:':
         setCheckInDate({ ...checkInDate, value: e.target.value, error: false });
         break;
-      case "Number of nights:":
+      case 'Number of nights:':
         setNumberOfNights({
           ...numberOfNights,
           value: e.target.value,
-          error: false,
+          error: false
         });
         break;
       default:
@@ -113,7 +115,7 @@ const CreateReservation = () => {
       e.preventDefault();
     }
 
-    if (roomType.value == "") {
+    if (roomType.value == '') {
       setRoomType({ ...roomType, error: true });
       formIsValid = false;
       e.preventDefault();
@@ -126,27 +128,27 @@ const CreateReservation = () => {
   };
 
   const addData = () => {
-    //Link that helped me with this
-    //https://blog.logrocket.com/how-to-use-axios-post-requests/
+    // Link that helped me with this
+    // https://blog.logrocket.com/how-to-use-axios-post-requests/
     setDataState({ ...dataState, loading: true, error: false });
     axios
       .post(
-        `http://localhost:8080/reservations`,
+        'http://localhost:8080/reservations',
         {
-          user: sessionStorage.getItem("user"),
+          user: sessionStorage.getItem('user'),
           guestEmail: guestEmail.value,
           roomTypeId: roomType.value,
           checkInDate: checkInDate.value,
-          numberOfNights: numberOfNights.value,
+          numberOfNights: numberOfNights.value
         },
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
+          }
         }
       )
       .then(() => {
-        navigate("/reservations");
+        navigate('/reservations');
       })
       .catch((err) => {
         setDataState({ ...dataState, loading: false, error: true });
@@ -193,15 +195,13 @@ const CreateReservation = () => {
             <option value="" disabled>
               Select your room type
             </option>
-            {roomTypesData.map((test) => {
-              return test.active == true ? (
-                <option key={test.id} value={test.id}>
-                  {test.name}
-                </option>
-              ) : null;
-            })}
+            {roomTypesData.map((test) => (test.active == true ? (
+              <option key={test.id} value={test.id}>
+                {test.name}
+              </option>
+            ) : null))}
           </select>
-          <br></br>
+          <br />
           {roomType.error ? (
             <p className="error">Must select a room type</p>
           ) : null}
@@ -210,5 +210,5 @@ const CreateReservation = () => {
       )}
     </div>
   );
-};
+}
 export default CreateReservation;

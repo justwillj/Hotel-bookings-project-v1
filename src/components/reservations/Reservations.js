@@ -1,36 +1,37 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom/dist";
-import axios from "axios";
-import Button from "../button/Button";
-import Card from "../card/Card";
-import "./Reservations.css";
-import Spinner from "../spinner/Spinner";
-import ServerError from "../serverError/ServerError";
-const Reservations = () => {
-  //Holds the reservations data
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom/dist';
+import axios from 'axios';
+import Button from '../button/Button';
+import Card from '../card/Card';
+import './Reservations.css';
+import Spinner from '../spinner/Spinner';
+import ServerError from '../serverError/ServerError';
+
+function Reservations() {
+  // Holds the reservations data
   const [reservationsData, setReservationsData] = useState([]);
 
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  //Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
   const redirect = useNavigate();
 
   const getAllData = () => {
-    //Link that helped me with this
-    //https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
+    // Link that helped me with this
+    // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
     Promise.all([
-      fetch("http://localhost:8080/reservations", {
+      fetch('http://localhost:8080/reservations', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       }),
-      fetch("http://localhost:8080/room-types", {
+      fetch('http://localhost:8080/room-types', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      }),
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
+      })
     ])
       .then(([resReservations, resRoomTypes]) => {
         if (!resReservations.ok || !resRoomTypes.ok) {
@@ -57,13 +58,13 @@ const Reservations = () => {
 
   const deleteReservation = (id) => {
     setDataState({ ...dataState, loading: false, error: false });
-    //Link that helped me with this
-    //https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
+    // Link that helped me with this
+    // https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
     axios
       .delete(`http://localhost:8080/reservations/${id}`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       })
       .then(() => {
         getAllData();
@@ -77,7 +78,7 @@ const Reservations = () => {
     <div className="reservation-main">
       <h1>Reservations Page</h1>
       {!dataState.loading ? <Spinner /> : null}
-      <br></br>
+      <br />
       <div className="reservation-error">
         <Link to="/reservations/create">
           <Button className="create-reservations" value="Create" />
@@ -87,45 +88,56 @@ const Reservations = () => {
           <ServerError />
         ) : (
           <div className="grid">
-            {reservationsData.map((reservation) => {
-              return (
-                <Card
-                  InputFive={roomTypesData.map((room) => {
-                    return (
-                      <div key={room.id}>
-                        {reservation.roomTypeId == room.id ? (
-                          <h1>
-                            Total: ${reservation.numberOfNights * room.rate}
-                          </h1>
-                        ) : null}
-                      </div>
-                    );
-                  })}
-                  InputTwo={roomTypesData.map((room) => {
-                    return (
-                      <div key={room.id}>
-                        {reservation.roomTypeId == room.id ? (
-                          <h1>Room name: {room.name}</h1>
-                        ) : null}
-                      </div>
-                    );
-                  })}
-                  key={reservation.id}
-                  InputOne={<>Guest email: {reservation.guestEmail}</>}
-                  InputThree={<>Check-in date: {reservation.checkInDate}</>}
-                  InputFour={
-                    <>Number of nights: {reservation.numberOfNights}</>
-                  }
-                  onClick={() => deleteReservation(reservation.id)}
-                  endpoint={`edit/${reservation.id}`}
-                  needDelete={true}
-                />
-              );
-            })}
+            {reservationsData.map((reservation) => (
+              <Card
+                InputFive={roomTypesData.map((room) => (
+                  <div key={room.id}>
+                    {reservation.roomTypeId == room.id ? (
+                      <h1>
+                        Total: $
+                        {reservation.numberOfNights * room.rate}
+                      </h1>
+                    ) : null}
+                  </div>
+                ))}
+                InputTwo={roomTypesData.map((room) => (
+                  <div key={room.id}>
+                    {reservation.roomTypeId == room.id ? (
+                      <h1>
+                        Room name:
+                        {room.name}
+                      </h1>
+                    ) : null}
+                  </div>
+                ))}
+                key={reservation.id}
+                InputOne={(
+                  <>
+                    Guest email:
+                    {reservation.guestEmail}
+                  </>
+                )}
+                InputThree={(
+                  <>
+                    Check-in date:
+                    {reservation.checkInDate}
+                  </>
+                )}
+                InputFour={(
+                  <>
+                    Number of nights:
+                    {reservation.numberOfNights}
+                  </>
+                )}
+                onClick={() => deleteReservation(reservation.id)}
+                endpoint={`edit/${reservation.id}`}
+                needDelete
+              />
+            ))}
           </div>
         )}
       </div>
     </div>
   );
-};
+}
 export default Reservations;
