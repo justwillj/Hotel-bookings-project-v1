@@ -136,6 +136,7 @@ const UpdateReservation = () => {
       .put(
         `http://localhost:8080/reservations/${id}`,
         {
+          user: sessionStorage.getItem("user"),
           guestEmail: guestEmail.value,
           roomTypeId: roomType.value,
           checkInDate: checkInDate.value,

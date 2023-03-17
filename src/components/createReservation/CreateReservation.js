@@ -133,6 +133,7 @@ const CreateReservation = () => {
       .post(
         `http://localhost:8080/reservations`,
         {
+          user: sessionStorage.getItem("user"),
           guestEmail: guestEmail.value,
           roomTypeId: roomType.value,
           checkInDate: checkInDate.value,
