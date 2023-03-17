@@ -111,9 +111,11 @@ const Reservations = () => {
                     );
                   })}
                   key={reservation.id}
-                  InputOne={reservation.guestEmail}
-                  InputThree={reservation.checkInDate}
-                  InputFour={reservation.numberOfNights}
+                  InputOne={<>Guest email: {reservation.guestEmail}</>}
+                  InputThree={<>Check-in date: {reservation.checkInDate}</>}
+                  InputFour={
+                    <>Number of nights: {reservation.numberOfNights}</>
+                  }
                   onClick={() => deleteReservation(reservation.id)}
                   endpoint={`edit/${reservation.id}`}
                   needDelete={true}

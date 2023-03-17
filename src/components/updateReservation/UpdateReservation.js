@@ -233,6 +233,7 @@ const UpdateReservation = () => {
           ) : null}
           <label htmlFor="Room Type:">Room Type:</label>
           <select value={roomType.value} onChange={selectOnChange}>
+            <option value="">Select your room</option>
             {roomTypesData.map((room) => {
               return room.active == true ? (
                 <option key={room.id} value={room.id}>

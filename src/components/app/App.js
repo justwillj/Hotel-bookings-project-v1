@@ -12,6 +12,7 @@ import PrivateRouteManager from "../privateRouteManager/PrivateRouteManager";
 import RoomTypes from "../room-types/RoomTypes";
 import CreateRoomTypes from "../createRoomTypes/CreateRoomTypes";
 import UpdateRoomType from "../updateRoomType/UpdateRoomType";
+import PageNotFound from "../pageNotFound/PageNotFound";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -103,6 +104,8 @@ function App() {
               </PrivateRouteManager>
             }
           ></Route>
+
+          <Route exact path="*" element={<PageNotFound />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
