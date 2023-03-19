@@ -13,7 +13,8 @@ function Form({ setStatus }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle
+  // the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: true, error: false });
 
   // Link that helped me with this
@@ -31,7 +32,7 @@ function Form({ setStatus }) {
         password
       })
       .then((res) => {
-        if (!res.status == 200) {
+        if (!res.status === 200) {
           throw Error(setError(true));
         }
         const user = jwt(res.data.token);

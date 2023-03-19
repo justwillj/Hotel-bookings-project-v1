@@ -22,12 +22,8 @@ function CreateRoomTypes() {
     error: false
   });
 
-  // Holds the reservations data
-  const [reservationsData, setReservationsData] = useState([]);
-
-  const [roomTypesData, setRoomTypesData] = useState([]);
-
-  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will
+  // toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
   const descriptionOnChange = (e) => {
@@ -56,27 +52,6 @@ function CreateRoomTypes() {
     }
   };
 
-  const addNewRoomType = (e) => {
-    let formIsValid = true;
-
-    if (!isValidRoomName(roomName.value)) {
-      setRoomName({ ...roomName, error: true });
-      formIsValid = false;
-      e.preventDefault();
-    }
-
-    if (isValidNumber(rate.value)) {
-      setRate({ ...rate, error: true });
-      formIsValid = false;
-      e.preventDefault();
-    }
-
-    if (formIsValid === true) {
-      addData();
-      e.preventDefault();
-    }
-  };
-
   const addData = () => {
     // Link that helped me with this
     // https://blog.logrocket.com/how-to-use-axios-post-requests/
@@ -99,11 +74,31 @@ function CreateRoomTypes() {
       .then(() => {
         navigate('/room-types');
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: false, error: true });
       });
   };
 
+  const addNewRoomType = (e) => {
+    let formIsValid = true;
+
+    if (!isValidRoomName(roomName.value)) {
+      setRoomName({ ...roomName, error: true });
+      formIsValid = false;
+      e.preventDefault();
+    }
+
+    if (isValidNumber(rate.value)) {
+      setRate({ ...rate, error: true });
+      formIsValid = false;
+      e.preventDefault();
+    }
+
+    if (formIsValid === true) {
+      addData();
+      e.preventDefault();
+    }
+  };
   return (
     <div className="main-create">
       <h1>Create Room-Type Page</h1>
@@ -122,8 +117,10 @@ function CreateRoomTypes() {
             <p className="error">Must be at least 3 characters</p>
           ) : null}
 
-          <label htmlFor="Description:">Description:</label>
-          <textarea value={description.value} onChange={descriptionOnChange} />
+          <label htmlFor="Description:">
+            Description:
+            <textarea value={description.value} onChange={descriptionOnChange} />
+          </label>
 
           <Input
             label="Rate:"

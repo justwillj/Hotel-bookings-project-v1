@@ -22,12 +22,10 @@ function CreateReservation() {
 
   const [roomType, setRoomType] = useState({ value: '', error: false });
 
-  // Holds the reservations data
-  const [reservationsData, setReservationsData] = useState([]);
-
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the error
+  // message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: true, error: false });
 
   const getAllData = () => {
@@ -51,13 +49,40 @@ function CreateReservation() {
         }
         return Promise.all([resReservations.json(), resRoomTypes.json()]);
       })
-      .then(([dataReservations, dataRoomTypes]) => {
-        setReservationsData(dataReservations);
+      .then(([dataRoomTypes]) => {
         setRoomTypesData(dataRoomTypes);
         setDataState({ ...dataState, loading: false, error: false });
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: true, error: true });
+      });
+  };
+
+  const addData = () => {
+    // Link that helped me with this
+    // https://blog.logrocket.com/how-to-use-axios-post-requests/
+    setDataState({ ...dataState, loading: true, error: false });
+    axios
+      .post(
+        'http://localhost:8080/reservations',
+        {
+          user: sessionStorage.getItem('user'),
+          guestEmail: guestEmail.value,
+          roomTypeId: roomType.value,
+          checkInDate: checkInDate.value,
+          numberOfNights: numberOfNights.value
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
+          }
+        }
+      )
+      .then(() => {
+        navigate('/reservations');
+      })
+      .catch(() => {
+        setDataState({ ...dataState, loading: false, error: true });
       });
   };
 
@@ -66,7 +91,7 @@ function CreateReservation() {
    */
   useEffect(() => {
     getAllData();
-  }, []);
+  });
 
   const selectOnChange = (e) => {
     setRoomType({ ...roomType, value: e.target.value, error: false });
@@ -115,7 +140,7 @@ function CreateReservation() {
       e.preventDefault();
     }
 
-    if (roomType.value == '') {
+    if (roomType.value === '') {
       setRoomType({ ...roomType, error: true });
       formIsValid = false;
       e.preventDefault();
@@ -125,34 +150,6 @@ function CreateReservation() {
       addData();
       e.preventDefault();
     }
-  };
-
-  const addData = () => {
-    // Link that helped me with this
-    // https://blog.logrocket.com/how-to-use-axios-post-requests/
-    setDataState({ ...dataState, loading: true, error: false });
-    axios
-      .post(
-        'http://localhost:8080/reservations',
-        {
-          user: sessionStorage.getItem('user'),
-          guestEmail: guestEmail.value,
-          roomTypeId: roomType.value,
-          checkInDate: checkInDate.value,
-          numberOfNights: numberOfNights.value
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`
-          }
-        }
-      )
-      .then(() => {
-        navigate('/reservations');
-      })
-      .catch((err) => {
-        setDataState({ ...dataState, loading: false, error: true });
-      });
   };
 
   return (
@@ -190,22 +187,24 @@ function CreateReservation() {
           {numberOfNights.error ? (
             <p className="error">Must be number greater than zero</p>
           ) : null}
-          <label htmlFor="Room Type:">Room Type:</label>
-          <select value={roomType.value} onChange={selectOnChange}>
-            <option value="" disabled>
-              Select your room type
-            </option>
-            {roomTypesData.map((test) => (test.active == true ? (
-              <option key={test.id} value={test.id}>
-                {test.name}
+          <label htmlFor="Room Type:">
+            Room Type:
+            <select id="Room Type:" value={roomType.value} onChange={selectOnChange}>
+              <option value="" disabled>
+                Select your room type
               </option>
-            ) : null))}
-          </select>
+              {roomTypesData.map((test) => (test.active === true ? (
+                <option key={test.id} value={test.id}>
+                  {test.name}
+                </option>
+              ) : null))}
+            </select>
+          </label>
           <br />
           {roomType.error ? (
             <p className="error">Must select a room type</p>
           ) : null}
-          <Button value="Create" className="create-btn" />
+          <Button value="Create" className="create-btn" onClick={addNewReservation} />
         </form>
       )}
     </div>

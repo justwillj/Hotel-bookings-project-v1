@@ -10,15 +10,15 @@ function NavBar({ logout }) {
         <h2>Hotel Bookings</h2>
       </div>
       <ul>
-        {sessionStorage.getItem('token') != '' ? (
+        {sessionStorage.getItem('token') !== '' ? (
           <ActiveLink to="/reservations">Reservations</ActiveLink>
         ) : null}
 
-        {sessionStorage.getItem('token') != ''
-        && sessionStorage.getItem('role') == 'manager' ? (
+        {sessionStorage.getItem('token') !== ''
+        && sessionStorage.getItem('role') === 'manager' ? (
           <ActiveLink to="/room-types">Room Types</ActiveLink>
           ) : null}
-        {sessionStorage.getItem('token') != '' ? (
+        {sessionStorage.getItem('token') !== '' ? (
           <li>
             <NavLink to="/" onClick={logout}>
               Logout

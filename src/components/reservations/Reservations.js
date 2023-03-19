@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom/dist';
+import { Link } from 'react-router-dom/dist';
 import axios from 'axios';
 import Button from '../button/Button';
 import Card from '../card/Card';
@@ -13,10 +13,9 @@ function Reservations() {
 
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will
+  // toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
-
-  const redirect = useNavigate();
 
   const getAllData = () => {
     // Link that helped me with this
@@ -44,7 +43,7 @@ function Reservations() {
         setRoomTypesData(dataRoomTypes);
         setDataState({ ...dataState, loading: true, error: false });
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: true, error: true });
       });
   };
@@ -54,7 +53,7 @@ function Reservations() {
    */
   useEffect(() => {
     getAllData();
-  }, []);
+  });
 
   const deleteReservation = (id) => {
     setDataState({ ...dataState, loading: false, error: false });
@@ -69,7 +68,7 @@ function Reservations() {
       .then(() => {
         getAllData();
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: true, error: true });
       });
   };
@@ -92,7 +91,7 @@ function Reservations() {
               <Card
                 InputFive={roomTypesData.map((room) => (
                   <div key={room.id}>
-                    {reservation.roomTypeId == room.id ? (
+                    {reservation.roomTypeId === room.id ? (
                       <h1>
                         Total: $
                         {reservation.numberOfNights * room.rate}
@@ -102,7 +101,7 @@ function Reservations() {
                 ))}
                 InputTwo={roomTypesData.map((room) => (
                   <div key={room.id}>
-                    {reservation.roomTypeId == room.id ? (
+                    {reservation.roomTypeId === room.id ? (
                       <h1>
                         Room name:
                         {room.name}

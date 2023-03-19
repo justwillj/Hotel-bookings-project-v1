@@ -41,7 +41,7 @@ function RoomTypes() {
         setRoomTypesData(dataRoomTypes);
         setDataState({ ...dataState, loading: true, error: false });
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: true, error: true });
       });
   };
