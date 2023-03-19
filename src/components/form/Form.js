@@ -12,6 +12,9 @@ function Form({ setStatus }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  sessionStorage.setItem('token', '');
+  sessionStorage.setItem('role', '');
+  sessionStorage.setItem('user', '');
 
   // Sets the spinner to appear if we are loading data and will toggle
   // the error message to appear is something is wrong

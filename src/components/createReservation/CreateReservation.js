@@ -21,7 +21,6 @@ function CreateReservation() {
   });
 
   const [roomType, setRoomType] = useState({ value: '', error: false });
-
   const [roomTypesData, setRoomTypesData] = useState([]);
 
   // Sets the spinner to appear if we are loading data and will toggle the error
@@ -31,25 +30,18 @@ function CreateReservation() {
   const getAllData = () => {
     // Link that helped me with this
     // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
-    Promise.all([
-      fetch('http://localhost:8080/reservations', {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
-      }),
-      fetch('http://localhost:8080/room-types', {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
-      })
-    ])
-      .then(([resReservations, resRoomTypes]) => {
-        if (!resReservations.ok || !resRoomTypes.ok) {
+    fetch('http://localhost:8080/room-types', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      }
+    })
+      .then((resRoomTypes) => {
+        if (!resRoomTypes.ok) {
           throw Error;
         }
-        return Promise.all([resReservations.json(), resRoomTypes.json()]);
+        return resRoomTypes.json();
       })
-      .then(([dataRoomTypes]) => {
+      .then((dataRoomTypes) => {
         setRoomTypesData(dataRoomTypes);
         setDataState({ ...dataState, loading: false, error: false });
       })
@@ -91,7 +83,8 @@ function CreateReservation() {
    */
   useEffect(() => {
     getAllData();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectOnChange = (e) => {
     setRoomType({ ...roomType, value: e.target.value, error: false });

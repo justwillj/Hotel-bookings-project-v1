@@ -7,37 +7,27 @@ import Spinner from '../spinner/Spinner';
 import ServerError from '../serverError/ServerError';
 
 function RoomTypes() {
-  // Holds the reservations data
-  const [reservationsData, setReservationsData] = useState([]);
-
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the
+  // error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
   const getAllData = () => {
     // Link that helped me with this
     // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
-    Promise.all([
-      fetch('http://localhost:8080/reservations', {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
-      }),
-      fetch('http://localhost:8080/room-types', {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
-      })
-    ])
-      .then(([resReservations, resRoomTypes]) => {
-        if (!resReservations.ok || !resRoomTypes.ok) {
+    fetch('http://localhost:8080/room-types', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      }
+    })
+      .then((resRoomTypes) => {
+        if (!resRoomTypes.ok) {
           throw Error;
         }
-        return Promise.all([resReservations.json(), resRoomTypes.json()]);
+        return resRoomTypes.json();
       })
-      .then(([dataReservations, dataRoomTypes]) => {
-        setReservationsData(dataReservations);
+      .then((dataRoomTypes) => {
         setRoomTypesData(dataRoomTypes);
         setDataState({ ...dataState, loading: true, error: false });
       })
@@ -51,6 +41,7 @@ function RoomTypes() {
    */
   useEffect(() => {
     getAllData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -87,9 +78,9 @@ function RoomTypes() {
                     Rate: $
                     {room.rate}
                   </>
-)}
+                  )}
                 InputFour={
-                  room.active == true ? (
+                  room.active === true ? (
                     <>Status: Active</>
                   ) : (
                     <>Status: Inactive</>

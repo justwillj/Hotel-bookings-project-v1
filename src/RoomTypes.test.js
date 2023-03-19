@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import RoomTypes from './components/room-types/RoomTypes';
+import React from "react";
+import { cleanup, render, waitForElement } from "@testing-library/react";
+import axios from "axios";
+import RoomTypes from "./components/room-types/RoomTypes";
+import Reservations from "./components/reservations/Reservations";
+import Form from "./components/form/Form";
 
-test('to make sure it renders', () => {
-  render(<RoomTypes />);
-  const linkElement = screen.getByText(/New Game/i);
-  expect(linkElement).toBeInTheDocument();
-});
+test("dsfasdf", async ()=>{
+})

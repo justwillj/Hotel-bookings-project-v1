@@ -24,31 +24,25 @@ function UpdateReservation() {
 
   const [roomTypesData, setRoomTypesData] = useState([]);
 
-  // Sets the spinner to appear if we are loading data and will toggle the error message to appear is something is wrong
+  // Sets the spinner to appear if we are loading data and will toggle the error
+  // message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
   const getAllData = () => {
     // Link that helped me with this
     // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
-    Promise.all([
-      fetch('http://localhost:8080/reservations', {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
-      }),
-      fetch('http://localhost:8080/room-types', {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
-      })
-    ])
-      .then(([resReservations, resRoomTypes]) => {
-        if (!resReservations.ok || !resRoomTypes.ok) {
+    fetch('http://localhost:8080/room-types', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      }
+    })
+      .then((resRoomTypes) => {
+        if (!resRoomTypes.ok) {
           throw Error;
         }
-        return Promise.all([resReservations.json(), resRoomTypes.json()]);
+        return resRoomTypes.json();
       })
-      .then(([dataRoomTypes]) => {
+      .then((dataRoomTypes) => {
         setRoomTypesData(dataRoomTypes);
         setDataState({ ...dataState, loading: true, error: false });
       })
@@ -56,14 +50,6 @@ function UpdateReservation() {
         setDataState({ ...dataState, loading: true, error: true });
       });
   };
-
-  /**
-   * Loads the getAllData function when the page is opened
-   */
-  useEffect(() => {
-    loadReservation();
-    getAllData();
-  }, []);
 
   const selectOnChange = (e) => {
     setRoomType({ ...roomType, value: e.target.value, error: false });
@@ -91,39 +77,6 @@ function UpdateReservation() {
     }
   };
 
-  const updateOldReservation = (e) => {
-    let formIsValid = true;
-
-    if (!isValidEmail(guestEmail.value)) {
-      setGuestEmail({ ...guestEmail, error: true });
-      formIsValid = false;
-      e.preventDefault();
-    }
-
-    if (!isValidDate(checkInDate.value)) {
-      setCheckInDate({ ...checkInDate, error: true });
-      formIsValid = false;
-      e.preventDefault();
-    }
-
-    if (isValidNumber(numberOfNights.value)) {
-      setNumberOfNights({ ...numberOfNights, error: true });
-      formIsValid = false;
-      e.preventDefault();
-    }
-
-    if (roomType.value == '') {
-      setRoomType({ ...roomType, error: true });
-      formIsValid = false;
-      e.preventDefault();
-    }
-
-    if (formIsValid === true) {
-      updateData();
-      e.preventDefault();
-    }
-  };
-
   const updateData = () => {
     setDataState({ ...dataState, loading: false, error: false });
 
@@ -148,9 +101,42 @@ function UpdateReservation() {
       .then(() => {
         navigate('/reservations');
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: true, error: true });
       });
+  };
+
+  const updateOldReservation = (e) => {
+    let formIsValid = true;
+
+    if (!isValidEmail(guestEmail.value)) {
+      setGuestEmail({ ...guestEmail, error: true });
+      formIsValid = false;
+      e.preventDefault();
+    }
+
+    if (!isValidDate(checkInDate.value)) {
+      setCheckInDate({ ...checkInDate, error: true });
+      formIsValid = false;
+      e.preventDefault();
+    }
+
+    if (isValidNumber(numberOfNights.value)) {
+      setNumberOfNights({ ...numberOfNights, error: true });
+      formIsValid = false;
+      e.preventDefault();
+    }
+
+    if (roomType.value === '') {
+      setRoomType({ ...roomType, error: true });
+      formIsValid = false;
+      e.preventDefault();
+    }
+
+    if (formIsValid === true) {
+      updateData();
+      e.preventDefault();
+    }
   };
 
   const loadReservation = () => {
@@ -161,7 +147,7 @@ function UpdateReservation() {
         }
       })
       .then((reservationRes) => {
-        if (!reservationRes.status == 200) {
+        if (!reservationRes.status === 200) {
           throw Error;
         }
         return (
@@ -188,10 +174,19 @@ function UpdateReservation() {
           setDataState({ ...dataState, loading: true, error: false })
         );
       })
-      .catch((err) => {
+      .catch(() => {
         setDataState({ ...dataState, loading: true, error: true });
       });
   };
+
+  /**
+   * Loads the getAllData function when the page is opened
+  */
+  useEffect(() => {
+    loadReservation();
+    getAllData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="main-create">
@@ -228,15 +223,17 @@ function UpdateReservation() {
           {numberOfNights.error ? (
             <p className="error">Must be number greater than zero</p>
           ) : null}
-          <label htmlFor="Room Type:">Room Type:</label>
-          <select value={roomType.value} onChange={selectOnChange}>
-            <option value="">Select your room</option>
-            {roomTypesData.map((room) => (room.active == true ? (
-              <option key={room.id} value={room.id}>
-                {room.name}
-              </option>
-            ) : null))}
-          </select>
+          <label htmlFor="room-Type">
+            Room Type:
+            <select name="room-Type" value={roomType.value} onChange={selectOnChange}>
+              <option value="">Select your room</option>
+              {roomTypesData.map((room) => (room.active === true ? (
+                <option key={room.id} value={room.id}>
+                  {room.name}
+                </option>
+              ) : null))}
+            </select>
+          </label>
           <br />
           {roomType.error ? (
             <p className="error">Must select a room type</p>

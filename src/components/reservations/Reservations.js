@@ -53,7 +53,8 @@ function Reservations() {
    */
   useEffect(() => {
     getAllData();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteReservation = (id) => {
     setDataState({ ...dataState, loading: false, error: false });

@@ -6,7 +6,6 @@ import './App.css';
 import Reservations from '../reservations/Reservations';
 import CreateReservation from '../createReservation/CreateReservation';
 import UpdateReservation from '../updateReservation/UpdateReservation';
-
 import PrivateRoute from '../privateRoute/PrivateRoute';
 import PrivateRouteManager from '../privateRouteManager/PrivateRouteManager';
 import RoomTypes from '../room-types/RoomTypes';
