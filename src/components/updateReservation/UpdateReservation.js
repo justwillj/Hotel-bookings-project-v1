@@ -9,25 +9,37 @@ import Spinner from '../spinner/Spinner';
 import './UpdateReservation.css';
 
 function UpdateReservation() {
+  // Allows the user to be redirected when doing a update
   const navigate = useNavigate();
+
+  // The id of the reservation we are updating
   const { id } = useParams();
+
+  // Holds onto the value and error state for guest email
   const [guestEmail, setGuestEmail] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for check in date
   const [checkInDate, setCheckInDate] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for number of nights
   const [numberOfNights, setNumberOfNights] = useState({
     value: '',
     error: false
   });
 
+  // Holds onto the value and error state for room type
   const [roomType, setRoomType] = useState({ value: '', error: false });
 
+  // Stores the room type data from the api
   const [roomTypesData, setRoomTypesData] = useState([]);
 
   // Sets the spinner to appear if we are loading data and will toggle the error
   // message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
+  /**
+   * Grabs the data from the api for room type and stores it in state
+   */
   const getAllData = () => {
     // Link that helped me with this
     // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
@@ -51,10 +63,18 @@ function UpdateReservation() {
       });
   };
 
+  /**
+   * Grabs the value the user select and changes the state of it
+   * @param {Event} e - The change of the value
+   */
   const selectOnChange = (e) => {
     setRoomType({ ...roomType, value: e.target.value, error: false });
   };
 
+  /**
+   * Grabs the value the user select and changes the state of it for each of the inputs
+   * @param {Event} e The change of the value
+   */
   const InputOnChange = (e) => {
     // get the name from the input
     const inputName = e.target.name;
@@ -77,6 +97,9 @@ function UpdateReservation() {
     }
   };
 
+  /**
+   * Updates the reservations that matches that id with the new inputs
+   */
   const updateData = () => {
     setDataState({ ...dataState, loading: false, error: false });
 
@@ -106,6 +129,10 @@ function UpdateReservation() {
       });
   };
 
+  /**
+   * Checks over all the inputs to make sure they are valid
+   * @param {SubmitEvent} e - when the user clicks the update button
+   */
   const updateOldReservation = (e) => {
     let formIsValid = true;
 
@@ -139,6 +166,9 @@ function UpdateReservation() {
     }
   };
 
+  /**
+   * Loads all the data for that reservations and fills out the form
+   */
   const loadReservation = () => {
     axios
       .get(`http://localhost:8080/reservations/${id}`, {
@@ -171,6 +201,7 @@ function UpdateReservation() {
             value: reservationRes.data.roomTypeId,
             error: false
           }),
+          getAllData(),
           setDataState({ ...dataState, loading: true, error: false })
         );
       })
@@ -180,11 +211,10 @@ function UpdateReservation() {
   };
 
   /**
-   * Loads the getAllData function when the page is opened
+   * Loads the loadReservation function when the page is opened
   */
   useEffect(() => {
     loadReservation();
-    getAllData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

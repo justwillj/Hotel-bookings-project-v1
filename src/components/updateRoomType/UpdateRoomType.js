@@ -9,14 +9,22 @@ import Spinner from '../spinner/Spinner';
 import './UpdateRoomType.css';
 
 function UpdateRoomType() {
-  const { id } = useParams();
+  // Allows the user to be redirected when doing a update
   const navigate = useNavigate();
+
+  // The id of the reservation we are updating
+  const { id } = useParams();
+
+  // Holds onto the value and error state for room name
   const [roomName, setRoomName] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for description
   const [description, setDescription] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for rate
   const [rate, setRate] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for active status
   const [activeStatus, setActiveStatus] = useState({
     value: false,
     error: false
@@ -26,10 +34,18 @@ function UpdateRoomType() {
   // to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: true, error: false });
 
+  /**
+   * Grabs the value the user select for description and changes the state of it
+   * @param {Event} e - The change of the value
+   */
   const descriptionOnChange = (e) => {
     setDescription({ ...description, value: e.target.value, error: false });
   };
 
+  /**
+   * Grabs the value the user select and changes the state of it for each of the inputs
+   * @param {Event} e The change of the value
+   */
   const InputOnChange = (e) => {
     // get the name from the input
     const inputName = e.target.name;
@@ -53,9 +69,8 @@ function UpdateRoomType() {
   };
 
   /**
-   * Loads the getAllData function when the page is opened
+   * Loads all the data for that room type and fills out the form
    */
-
   const loadRoomTypes = () => {
     axios
       .get(`http://localhost:8080/room-types/${id}`, {
@@ -92,15 +107,22 @@ function UpdateRoomType() {
         );
       })
       .catch(() => {
-        setDataState({ ...dataState, loading: true, error: true });
+        setDataState({ ...dataState, loading: false, error: true });
       });
   };
 
+  /**
+   * Loads the loadRoomTypes function on page load
+   */
   useEffect(() => {
     loadRoomTypes();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const addData = () => {
+  /**
+   * Updates the reservations that matches that id with the new inputs
+   */
+  const updateData = () => {
     // Link that helped me with this
     // https://blog.logrocket.com/how-to-use-axios-post-requests/
     setDataState({ ...dataState, loading: true, error: false });
@@ -143,7 +165,7 @@ function UpdateRoomType() {
     }
 
     if (formIsValid === true) {
-      addData();
+      updateData();
       e.preventDefault();
     }
   };

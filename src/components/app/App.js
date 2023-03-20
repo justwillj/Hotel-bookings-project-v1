@@ -14,8 +14,13 @@ import UpdateRoomType from '../updateRoomType/UpdateRoomType';
 import PageNotFound from '../pageNotFound/PageNotFound';
 
 function App() {
+  // Holds on to the state if the user is logged in or not
   const [loggedIn, setLoggedIn] = useState(false);
 
+  /**
+   * This allows the user to logout which will redirect them back to the login page and
+   * reset there information
+   */
   const logout = () => {
     sessionStorage.setItem('token', '');
     sessionStorage.setItem('role', '');
@@ -23,11 +28,17 @@ function App() {
     setLoggedIn(false);
   };
 
+  /**
+   * Also the login state to be saved on refresh
+   */
   useEffect(() => {
     const data = window.localStorage.getItem('logStatus');
     setLoggedIn(data);
   }, []);
 
+  /**
+   * Also the login state to be saved on refresh
+   */
   useEffect(() => {
     // link that helped me with this
     // https://www.youtube.com/watch?v=rWfhwW9forg

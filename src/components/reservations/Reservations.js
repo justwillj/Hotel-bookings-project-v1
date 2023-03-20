@@ -11,12 +11,16 @@ function Reservations() {
   // Holds the reservations data
   const [reservationsData, setReservationsData] = useState([]);
 
+  // Holds the room type data
   const [roomTypesData, setRoomTypesData] = useState([]);
 
   // Sets the spinner to appear if we are loading data and will
   // toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
+  /**
+   * Grabs the data from the api for room type and stores it in state
+   */
   const getAllData = () => {
     // Link that helped me with this
     // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
@@ -56,6 +60,10 @@ function Reservations() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Grabs the id of the reservations and deletes it and reloads all of reservations
+   * @param {number} id the id of the reservation we want to delete
+   */
   const deleteReservation = (id) => {
     setDataState({ ...dataState, loading: false, error: false });
     // Link that helped me with this
@@ -93,10 +101,10 @@ function Reservations() {
                 InputFive={roomTypesData.map((room) => (
                   <div key={room.id}>
                     {reservation.roomTypeId === room.id ? (
-                      <h1>
+                      <>
                         Total: $
                         {reservation.numberOfNights * room.rate}
-                      </h1>
+                      </>
                     ) : null}
                   </div>
                 ))}

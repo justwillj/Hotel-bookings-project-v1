@@ -10,13 +10,19 @@ import Spinner from '../spinner/Spinner';
 import './CreateRoomTypes.css';
 
 function CreateRoomTypes() {
+  // Allows the user to be redirected on successfully update
   const navigate = useNavigate();
+
+  // Holds onto the value and error state for room name
   const [roomName, setRoomName] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for description
   const [description, setDescription] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for rate
   const [rate, setRate] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for active status
   const [activeStatus, setActiveStatus] = useState({
     value: false,
     error: false
@@ -26,10 +32,18 @@ function CreateRoomTypes() {
   // toggle the error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
+  /**
+   * Grabs the value the user select for description and changes the state of it
+   * @param {Event} e - The change of the value
+   */
   const descriptionOnChange = (e) => {
     setDescription({ ...description, value: e.target.value, error: false });
   };
 
+  /**
+   * Grabs the value the user select and changes the state of it for each of the inputs
+   * @param {Event} e The change of the value
+   */
   const InputOnChange = (e) => {
     // get the name from the input
     const inputName = e.target.name;
@@ -52,6 +66,9 @@ function CreateRoomTypes() {
     }
   };
 
+  /**
+   * Will add the new room type to the api and database
+   */
   const addData = () => {
     // Link that helped me with this
     // https://blog.logrocket.com/how-to-use-axios-post-requests/
@@ -79,6 +96,10 @@ function CreateRoomTypes() {
       });
   };
 
+  /**
+   * Checks over all the inputs to make sure they are valid
+   * @param {SubmitEvent} e - when the user clicks the create button
+   */
   const addNewRoomType = (e) => {
     let formIsValid = true;
 

@@ -9,9 +9,16 @@ import Spinner from '../spinner/Spinner';
 import ServerError from '../serverError/ServerError';
 
 function Form({ setStatus }) {
+  // Holds onto the value and error state for email
   const [email, setEmail] = useState('');
+
+  // Holds onto the value and error state for password
   const [password, setPassword] = useState('');
+
+  // Holds onto the value for error
   const [error, setError] = useState(false);
+
+  // Sets all the user information to blank when the app starts
   sessionStorage.setItem('token', '');
   sessionStorage.setItem('role', '');
   sessionStorage.setItem('user', '');
@@ -22,8 +29,14 @@ function Form({ setStatus }) {
 
   // Link that helped me with this
   // https://bobbyhadz.com/blog/react-onclick-redirect
+  // Allows the user to be redirected on successfully update
   const navigate = useNavigate();
 
+  /**
+   * Checks over the inputs to see if they are in the database and logins the user in
+   * and storing the jwt token that is given
+   * @param {SubmitEvent} e When the user clicks the login button
+   */
   const formLogin = (e) => {
     e.preventDefault();
     setDataState({ ...dataState, loading: false, error: false });
@@ -56,6 +69,10 @@ function Form({ setStatus }) {
       });
   };
 
+  /**
+   * Grabs the value the user select and changes the state of it for each of the inputs
+   * @param {Event} e The change of the value
+   */
   const InputOnChange = (e) => {
     // get the name from the input
     const inputName = e.target.name;

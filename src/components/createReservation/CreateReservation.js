@@ -10,23 +10,33 @@ import Spinner from '../spinner/Spinner';
 import './CreateReservations.css';
 
 function CreateReservation() {
+  // Allows the user to be redirected on successfully update
   const navigate = useNavigate();
+
+  // Holds onto the value and error state for guest email
   const [guestEmail, setGuestEmail] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for check in date
   const [checkInDate, setCheckInDate] = useState({ value: '', error: false });
 
+  // Holds onto the value and error state for number of nights
   const [numberOfNights, setNumberOfNights] = useState({
     value: '',
     error: false
   });
-
+  // Holds onto the value and error state for room type
   const [roomType, setRoomType] = useState({ value: '', error: false });
+
+  // Stores the room type data from the api
   const [roomTypesData, setRoomTypesData] = useState([]);
 
   // Sets the spinner to appear if we are loading data and will toggle the error
   // message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: true, error: false });
 
+  /**
+   * Grabs the data from the api for room type and stores it in state
+   */
   const getAllData = () => {
     // Link that helped me with this
     // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
@@ -50,6 +60,9 @@ function CreateReservation() {
       });
   };
 
+  /**
+   * Will add the new reservation to the api and database
+   */
   const addData = () => {
     // Link that helped me with this
     // https://blog.logrocket.com/how-to-use-axios-post-requests/
@@ -86,10 +99,18 @@ function CreateReservation() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Grabs the value the user select and changes the state of it
+   * @param {Event} e - The change of the value
+   */
   const selectOnChange = (e) => {
     setRoomType({ ...roomType, value: e.target.value, error: false });
   };
 
+  /**
+   * Grabs the value the user select and changes the state of it for each of the inputs
+   * @param {Event} e The change of the value
+   */
   const InputOnChange = (e) => {
     // get the name from the input
     const inputName = e.target.name;
@@ -112,6 +133,10 @@ function CreateReservation() {
     }
   };
 
+  /**
+   * Checks over all the inputs to make sure they are valid
+   * @param {SubmitEvent} e - when the user clicks the create button
+   */
   const addNewReservation = (e) => {
     let formIsValid = true;
 

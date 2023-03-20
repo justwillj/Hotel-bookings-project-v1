@@ -7,12 +7,16 @@ import Spinner from '../spinner/Spinner';
 import ServerError from '../serverError/ServerError';
 
 function RoomTypes() {
+  // Holds on to the room types data
   const [roomTypesData, setRoomTypesData] = useState([]);
 
   // Sets the spinner to appear if we are loading data and will toggle the
   // error message to appear is something is wrong
   const [dataState, setDataState] = useState({ loading: false, error: false });
 
+  /**
+   * Grabs the data from the api for room type and stores it in state
+   */
   const getAllData = () => {
     // Link that helped me with this
     // https://medium.com/@jdhawks/make-fetch-s-happen-5022fcc2ddae
@@ -62,10 +66,10 @@ function RoomTypes() {
               <Card
                 key={room.id}
                 InputOne={(
-                  <p>
+                  <>
                     Name:
                     {room.name}
-                  </p>
+                  </>
                 )}
                 InputTwo={(
                   <>
