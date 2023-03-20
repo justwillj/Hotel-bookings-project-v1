@@ -50,7 +50,6 @@ function RoomTypes() {
 
   return (
     <div className="reservation-main">
-      <h1>Room Types Page</h1>
       {!dataState.loading ? <Spinner /> : null}
       <br />
       <div className="reservation-error">

@@ -40,8 +40,9 @@ h1 {
 }
 
 textarea{
+  margin-left: 1rem;
   border-radius: .5rem;
   font-size: 1.2rem;
   min-height: 4rem;
-  width: 91%;
+  width: 69%;
 }

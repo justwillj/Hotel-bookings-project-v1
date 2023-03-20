@@ -106,7 +106,10 @@ function UpdateRoomType() {
           setDataState({ ...dataState, loading: false, error: false })
         );
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err.code === 'ERR_BAD_REQUEST') {
+          navigate('/not-found');
+        }
         setDataState({ ...dataState, loading: false, error: true });
       });
   };

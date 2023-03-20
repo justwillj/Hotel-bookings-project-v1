@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-
+import TextArea from '../textArea/TextArea';
 import { isValidNumber, isValidRoomName } from '../../validation';
 import Button from '../button/Button';
 import Input from '../input/Input';
@@ -137,12 +137,7 @@ function CreateRoomTypes() {
           {roomName.error ? (
             <p className="error">Must be at least 3 characters</p>
           ) : null}
-
-          <label htmlFor="Description:">
-            Description:
-            <textarea value={description.value} onChange={descriptionOnChange} />
-          </label>
-
+          <TextArea label="Description:" value={description.value} onChange={descriptionOnChange} />
           <Input
             label="Rate:"
             type="number"

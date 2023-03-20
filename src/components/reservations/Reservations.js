@@ -84,7 +84,6 @@ function Reservations() {
 
   return (
     <div className="reservation-main">
-      <h1>Reservations Page</h1>
       {!dataState.loading ? <Spinner /> : null}
       <br />
       <div className="reservation-error">

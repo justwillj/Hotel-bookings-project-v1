@@ -205,7 +205,10 @@ function UpdateReservation() {
           setDataState({ ...dataState, loading: true, error: false })
         );
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err.code === 'ERR_BAD_REQUEST') {
+          navigate('/not-found');
+        }
         setDataState({ ...dataState, loading: true, error: true });
       });
   };

@@ -27,13 +27,12 @@ input[type="checkbox"] {
   display: inline-block;
   margin-top: -3rem;
   margin-left: -10rem;
-
   box-shadow: none;
   min-height: 2.5rem;
-  
 }
 
 label {
+  align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 1rem;
   padding-bottom: 0.3rem;
