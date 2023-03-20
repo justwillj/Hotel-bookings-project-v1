@@ -6,6 +6,7 @@ import Button from '../button/Button';
 import Input from '../input/Input';
 import ServerError from '../serverError/ServerError';
 import Spinner from '../spinner/Spinner';
+import TextArea from '../textArea/TextArea';
 import './UpdateRoomType.css';
 
 function UpdateRoomType() {
@@ -175,7 +176,7 @@ function UpdateRoomType() {
 
   return (
     <div className="main-create">
-      <h1>Edit Room-Type Page</h1>
+      <h1>Edit Room Type</h1>
       {dataState.loading ? <Spinner /> : null}
       {dataState.error ? (
         <ServerError />
@@ -190,16 +191,7 @@ function UpdateRoomType() {
           {roomName.error ? (
             <p className="error">Must be at least 3 characters</p>
           ) : null}
-
-          <label htmlFor="Description:">
-            Description:
-            <textarea
-              id="Description:"
-              value={description.value}
-              onChange={descriptionOnChange}
-            />
-          </label>
-
+          <TextArea label="Description:" value={description.value} onChange={descriptionOnChange} />
           <Input
             label="Rate:"
             type="number"

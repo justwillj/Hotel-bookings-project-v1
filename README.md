@@ -8,7 +8,11 @@ This is a frontend application that allows the user to interact with our custom 
 
 ## Login
 
-To login to our application we have 2 differnt user logins that work:
+| If you want to...              | Use this method...  | And this URI...             |
+|--------------------------------|---------------------|-----------------------------|
+| Login as a manager or employee | POST                | http://localhost:8080/login |
+
+To login to our application we have 2 different user logins that work:
 
 ### Manager
 email: manager@hotelapi.com

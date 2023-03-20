@@ -223,7 +223,7 @@ function UpdateReservation() {
 
   return (
     <div className="main-create">
-      <h1>Update Reservation Page</h1>
+      <h1>Update Reservation</h1>
       {!dataState.loading ? <Spinner /> : null}
       {dataState.error ? (
         <ServerError />

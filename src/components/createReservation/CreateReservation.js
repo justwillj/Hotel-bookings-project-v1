@@ -172,7 +172,7 @@ function CreateReservation() {
 
   return (
     <div className="main-create">
-      <h1>Create Reservation Page</h1>
+      <h1>Create Reservation</h1>
       {dataState.loading ? <Spinner /> : null}
       {dataState.error ? (
         <ServerError />

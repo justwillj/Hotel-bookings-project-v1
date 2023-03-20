@@ -13,6 +13,10 @@
     padding-bottom: 1rem;
     margin-bottom: 2rem;
 }
+
+.create-reservations a{
+    display: block;
+}
 .reservation-error{
     text-align: center;
     display: flex;

@@ -122,7 +122,7 @@ function CreateRoomTypes() {
   };
   return (
     <div className="main-create">
-      <h1>Create Room-Type Page</h1>
+      <h1>Create Room Type</h1>
       {dataState.loading ? <Spinner /> : null}
       {dataState.error ? (
         <ServerError />
