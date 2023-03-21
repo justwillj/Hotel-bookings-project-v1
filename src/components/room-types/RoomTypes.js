@@ -66,7 +66,7 @@ function RoomTypes() {
                 key={room.id}
                 InputOne={(
                   <>
-                    Name:
+                    Room Name:
                     {room.name}
                   </>
                 )}

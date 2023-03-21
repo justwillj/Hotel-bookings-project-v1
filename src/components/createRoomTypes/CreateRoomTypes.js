@@ -49,7 +49,7 @@ function CreateRoomTypes() {
     const inputName = e.target.name;
     // update state variables accordingly
     switch (inputName) {
-      case 'Name:':
+      case 'Room Name:':
         setRoomName({ ...roomName, value: e.target.value, error: false });
         break;
       case 'Rate:':
@@ -129,7 +129,7 @@ function CreateRoomTypes() {
       ) : (
         <form className="main" onSubmit={addNewRoomType} noValidate>
           <Input
-            label="Name:"
+            label="Room Name:"
             type="text"
             value={roomName.value}
             onChange={InputOnChange}

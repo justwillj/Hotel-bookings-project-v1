@@ -29,7 +29,15 @@ Node.js version 18.14.0^
 * Run npm install in root folder to install dependencies.
 * Run npm start and navigate to localhost:3000 to view application.
 
-* Access to Reservation data model:
+Access to Reservation data model:
+
+| If you want to...        | Use this method...  | And this URI...                          |
+|--------------------------|---------------------|------------------------------------------|
+| Create a reservation     | POST                | http://localhost:8080/reservations       |
+| Read all reservations    | GET                 | http://localhost:8080/reservations       |
+| Read a reservation by id | GET                 | http://localhost:8080/reservations/{id}  |
+| Update a reservation     | PUT                 | http://localhost:8080/reservations/{id}  |
+| Delete a reservation     | DELETE              | http://localhost:8080/reservations/{id}  |
 ```
 {
     "user": string,
@@ -40,7 +48,14 @@ Node.js version 18.14.0^
 }
 ```
 
-* Access to Room type data model:
+Access to Room type data model:
+
+| If you want to...        | Use this method...  | And this URI...                       |
+|--------------------------|---------------------|---------------------------------------|
+| Create a room types      | POST                | http://localhost:8080/room-types      |
+| Read all room types      | GET                 | http://localhost:8080/room-types      |
+| Read a room types by id  | GET                 | http://localhost:8080/room-types/{id} |
+| Update a room types      | PUT                 | http://localhost:8080/room-types/{id} |
 ```
 {
     "name": string,

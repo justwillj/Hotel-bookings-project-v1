@@ -1,7 +1,7 @@
 .create-btn {
   width: 90%;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 select {
@@ -20,7 +20,7 @@ select {
   position: absolute;
   font-size: 1.2rem;
   color: red;
-  margin-top: -1rem;
+  margin-top: -1.1rem;
   margin-left: 2rem;
 }
 

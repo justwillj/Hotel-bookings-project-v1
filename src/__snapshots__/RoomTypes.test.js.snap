@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <nav>
+      <div
+        class="header"
+      >
+        <h2>
+          Hotel Bookings
+        </h2>
+      </div>
+      <ul />
+    </nav>
+    <div
+      class="loading"
+    >
+      <div
+        class="login-main"
+      >
+        <div
+          class="main"
+        >
+          <form
+            novalidate=""
+          >
+            <h1>
+              Login
+            </h1>
+            <div
+              class="input"
+            >
+              <label
+                for="Email:"
+              >
+                Email:
+              </label>
+              <input
+                id="Email:"
+                name="Email:"
+                type="email"
+                value=""
+              />
+              <div
+                class="error-message"
+              >
+                 
+              </div>
+            </div>
+            <div
+              class="input"
+            >
+              <label
+                for="Password:"
+              >
+                Password:
+              </label>
+              <input
+                id="Password:"
+                name="Password:"
+                type="password"
+                value=""
+              />
+              <div
+                class="error-message"
+              >
+                 
+              </div>
+            </div>
+            <button
+              class="login-btn"
+              type="submit"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

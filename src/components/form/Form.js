@@ -80,9 +80,11 @@ function Form({ setStatus }) {
     switch (inputName) {
       case 'Email:':
         setEmail(e.target.value);
+        setError(false);
         break;
       case 'Password:':
         setPassword(e.target.value);
+        setError(false);
         break;
       default:
     }
