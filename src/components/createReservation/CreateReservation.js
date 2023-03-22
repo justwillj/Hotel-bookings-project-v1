@@ -56,7 +56,7 @@ function CreateReservation() {
         setDataState({ ...dataState, loading: false, error: false });
       })
       .catch(() => {
-        setDataState({ ...dataState, loading: true, error: true });
+        setDataState({ ...dataState, loading: false, error: true });
       });
   };
 
