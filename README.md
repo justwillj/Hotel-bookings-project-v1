@@ -1,6 +1,7 @@
 # Hotel bookings project v1
 
 Hotel Bookings is a front end application that uses our custom API we have been provided to handle different types of CRUD request and to be able to present the data to the user. All of the provided resource are include down below including the link for the API, how to run the application and API, the data model we followed and how to run eslint and testing.
+# Author: Justin Williams
 
 ## Description 
 
@@ -40,6 +41,7 @@ Access to Reservation data model:
 | Delete a reservation     | DELETE              | http://localhost:8080/reservations/{id}  |
 ```
 {
+    "id": number,
     "user": string,
     "guestEmail": sting,
     "roomTypeId": number,
@@ -67,6 +69,7 @@ Access to Room type data model:
 | Update a room types      | PUT                 | http://localhost:8080/room-types/{id} |
 ```
 {
+    "id": number,
     "name": string,
     "description": string,
     "rate": number,
@@ -121,3 +124,13 @@ This API will be hosted on localhost:8080 and requires access to a Postgres data
 
 * Button : https://getcssscan.com/css-buttons-examples
 * Spinner : https://loading.io/css/
+
+## Resources
+
+* https://www.youtube.com/watch?v=SLfhMt5OUPI - for setting the active nav bar element
+* https://www.youtube.com/watch?v=rWfhwW9forg - for saving the state on a refresh
+* https://blog.logrocket.com/how-to-use-axios-post-requests/ - for making POST request with axios 
+* https://bobbyhadz.com/blog/react-onclick-redirect - redirect to another page on button click
+* https://www.youtube.com/watch?v=YYDpGYOjfqM - for the private route function
+* https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/ - for getting the DELETE to work 
+* https://www.youtube.com/watch?v=GBbGEuZdyRg - for getting the PUT to work 

@@ -5,6 +5,7 @@
   border-radius: 15px;
   box-shadow: 10px 10px rgba(0, 0, 0, 0.5);
 }
+
 .login-main {
   position: absolute;
   top: 45%;
@@ -13,7 +14,8 @@
   transform: translate(-50%, -50%);
 }
 
-.loading{
+.loading {
+  margin-left: 1.5rem;
   text-align: center;
 }
 
@@ -22,6 +24,7 @@
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
+
 .error-login {
   font-size: 1.5rem;
   margin-top: -.6rem;
@@ -29,9 +32,11 @@
   position: absolute;
   color: red;
 }
+
 form {
   width: 35rem;
 }
+
 h1 {
   font-size: 3rem;
   color: black;
@@ -39,7 +44,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-textarea{
+textarea {
   border-radius: .5rem;
   font-size: 1.2rem;
   min-height: 4rem;
